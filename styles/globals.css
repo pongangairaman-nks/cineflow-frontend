@@ -1,0 +1,90 @@
+@tailwind base;
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+@tailwind components;
+@tailwind utilities;
+
+/* Cine Flow Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+:root {
+  --background: #141414; /* Dark Netflix-like background */
+  --foreground: #e50914; /* Netflix red for buttons */
+  --textColor: #ffffff; /* White text */
+  --gray-light: #b3b3b3; /* Gray text */
+  --input-bg: #333333; /* Input fields background */
+  --input-border: #666666; /* Input border */
+  --input-focus: #e50914; /* Focus color */
+  --font: "Inter", sans-serif;
+}
+
+/* ✅ Apply Global Styles */
+body {
+  background: var(--background);
+  color: var(--textColor);
+  font-family: var(--font);
+}
+
+/* ✅ Background Image Overlay */
+.bg-overlay {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* ✅ Input Field Styling */
+input {
+  padding: 12px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--textColor);
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: var(--input-focus);
+  outline: none;
+}
+
+/* ✅ Button Styling */
+button {
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: "background 0.3s ease-in-out";
+}
+
+button:hover {
+  background: #b20710; /* Slightly darker red on hover */
+}
+
+/* ✅ Links */
+a {
+  color: var(--textColor);
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--foreground);
+}
+
+/* ✅ Centering the Form */
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ✅ Sign-In Box */
+.auth-box {
+  background: var(--background);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}

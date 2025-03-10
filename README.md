@@ -1,40 +1,3 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
 ## Folder Structure
 
 📂 cineflow-frontend
@@ -66,3 +29,82 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 ┣ 📜 next.config.js → Next.js Configuration
 ┣ 📜 package.json → Dependencies & Scripts
 ┣ 📜 .env → API Configuration
+
+# Tech Stack
+
+## Front End
+
+### Next.js and Core Dependencies
+
+Next JS (App Router + Server Actions) - For SSR, ISR and API routes
+React - For building UI components
+React DOM - React rendering for the DOM
+
+### UI and Styling
+
+ShadCn - Style UI Components
+Tailwind CSS - For rapid styling and responsive design
+Postcss - Required for Tailwind processing
+Autoprefixer - Ensures CSS compatibility
+
+### State Management
+
+Redux toolkit - State management for global user/auth state
+React Redux - Connection between react and redux
+Zustand - Lightweight state management for UI like video control
+
+### API data fetching and Backend Communication (Light API Handling using Next.Js)
+
+React Query - For efficient API data fetching and caching
+Next-Auth - Authentication handling (Google, Credentials, JWT etc.)
+MongoDB - MongoDB driver for database connection
+@Prisma/client - ORM for MongoDB
+
+### Animations and UI Enhancements
+
+Framer Motion - For animations, pager transitions, hover effects
+
+### Video Playback and Streaming
+
+Plyr - For video playback
+React Player - For multiple formats like MP4 etc.
+
+### Deployment and Performance Optimization
+
+Vercel - Deployment platform for Next js
+.env - Managing environment variables
+
+## Back End
+
+Node Js with Express js - For building API
+Database -> Mongo DB - For flexible video meta data storage
+
+## Authentication and Security
+
+NextAuth.Js - For Authentication
+JWT - For session management
+RBAC - Role Based Access Control
+
+## Deployment
+
+Vercel - For Front End + Back End
+
+## Streaming and Video Optimization
+
+Vimeo APIs - For Video Processing and Delivery
+Live Streaming - https based livestreaming for optimizing the video playbacks
+
+## Features
+
+### Light API Handling using Next.Js
+
+Fetching Videos ("/api/videos")
+Basic Authentication ("/api/auth")
+UI related data (watch history, likes, comments)
+
+### Heavy Backend Processing
+
+User Profiles
+AI powered video recommendations
+Payment processing (Stripe)
+HLS (Video encoding and streaming)

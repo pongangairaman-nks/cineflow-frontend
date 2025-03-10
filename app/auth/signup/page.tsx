@@ -1,46 +1,52 @@
 "use client";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../../redux/slices/authSlice";
+// import { useDispatch } from "react-redux";
+// import { login } from "../../../redux/slices/authSlice";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
-interface LoginForm {
+interface SignUpForm {
+  name: string;
   email: string;
   password: string;
 }
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const [error, setError] = useState<string | null>(null);
+  // const dispatch = useDispatch();
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid }
-  } = useForm<LoginForm>({
+  } = useForm<SignUpForm>({
     mode: "onBlur"
   });
 
-  const handleLogin = async (data: LoginForm) => {
+  const handleSignUp = async (data: SignUpForm) => {
     setError(null);
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/login`, {
+      const response = await fetch(`http://localhost:5000/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ email: data.email, password: data.password })
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          password: data.password
+        })
       });
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message || "Login Failed");
-      dispatch(login({ email: data.email, token: responseData.token }));
-      console.log("Login Success");
-      router.push("/success?type=login");
+      if (!response.ok)
+        throw new Error(responseData.message || "SignUp Failed");
+      console.log("Sign Up Success");
+      alert(responseData.message);
+      router.push("/success?type=signup");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.log(err.message);
@@ -61,8 +67,19 @@ export default function Home() {
 
         <form
           className="mt-6 flex flex-col space-y-4"
-          onSubmit={handleSubmit(handleLogin)}
+          onSubmit={handleSubmit(handleSignUp)}
         >
+          <Input
+            type="name"
+            placeholder="Name"
+            required={true}
+            {...register("name", {
+              required: "Name is required"
+            })}
+          />
+          {errors.name && (
+            <p className="text-red-500 text-sm">{errors.name.message}</p>
+          )}
           <Input
             type="email"
             placeholder="Email"
@@ -98,14 +115,14 @@ export default function Home() {
             className="bg-[var(--foreground)] text-white font-semibold py-3"
             disabled={!isValid}
           >
-            Sign In
+            Sign Up
           </Button>
         </form>
 
         <div className="mt-4 flex justify-between text-sm text-gray-400">
           <Link href="#">Forgot password?</Link>
-          <Link href="/auth/signup" className="text-[var(--foreground)]">
-            Sign up now
+          <Link href="/auth/login" className="text-[var(--foreground)]">
+            Sign In
           </Link>
         </div>
       </div>

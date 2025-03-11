@@ -4,17 +4,24 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
 
-interface IMovieProps {
-  id: number;
+interface IVideoProps {
+  _id: string;
   title: string;
-  poster_path: string;
+  type: string;
+  genre: string;
+  url: string; //s3 video url
+  posterUrl: string; //s3 poster url
+  createdAt: string;
 }
 
-interface IMovieRowProps {
+interface IVideoRowProps {
   title: string;
-  movies: IMovieProps[];
+  videos: IVideoProps[];
 }
-export default function MovieRow({ title, movies }: IMovieRowProps) {
+
+// const BASE_IMAGE_URL = "cineflow-videofiles.s3.ap-south-1.amazonaws.com";
+
+export default function VideoRow({ title, videos }: IVideoRowProps) {
   const rowRef = useRef<HTMLDivElement>(null);
 
   //   function to scroll left or right
@@ -29,9 +36,11 @@ export default function MovieRow({ title, movies }: IMovieRowProps) {
     }
   };
 
+  console.log("posterUrl", videos[0]?.posterUrl);
+
   return (
     <section className="relative px-10 py-4">
-      {/* Movie category title */}
+      {/* Video category title */}
       <h3 className="text-2xl font-bold text-white mb-4">{title}</h3>
       {/* Left Scroll Button */}
       <button
@@ -40,28 +49,35 @@ export default function MovieRow({ title, movies }: IMovieRowProps) {
       >
         ◀
       </button>
-      {/* Movie Row Horizontally Scrollable */}
+      <button
+        className="absolute top-1/2 transform -translate-y-1/2 bg-black"
+        style={{ right: 0, zIndex: 1 }}
+        onClick={() => scrollRow("right")}
+      >
+        ▶
+      </button>
+      {/* Video Row Horizontally Scrollable */}
       <div
         ref={rowRef}
         className="flex space-x-4 overflow-x-scroll scrollbar-hide"
       >
-        {movies?.map((movie) => {
+        {videos?.map((video) => {
           return (
             <motion.div
-              key={movie.id}
+              key={video._id}
               className="relative w-48 flex flex-shrink-0 group cursor-pointer"
             >
-              {/* Movie Poster */}
+              {/* Video Poster */}
               <Image
-                src={movie.poster_path}
-                alt={movie.title}
-                width={192}
+                src={video.posterUrl}
+                alt={video.title}
+                width={260}
                 height={288}
                 className="rounded priority"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-all flex items-end p2">
                 <p className="text-sm font-semibold text-white">
-                  {movie.title}
+                  {video.title}
                 </p>
               </div>
             </motion.div>
@@ -69,12 +85,6 @@ export default function MovieRow({ title, movies }: IMovieRowProps) {
         })}
       </div>
       {/* Right Scroll Button */}
-      <button
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black"
-        onClick={() => scrollRow("right")}
-      >
-        ▶
-      </button>
     </section>
   );
 }

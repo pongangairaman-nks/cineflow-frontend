@@ -14,7 +14,7 @@ export default function HeroSection() {
   return (
     <section className="relative h-screen bg-black text-white flex flex-col justify-end p-12">
       {/* Background image from s3 */}
-      <div className="inset-0 -z-10">
+      <div className="inset-0 -z-10 opacity-50">
         <Image
           src={featuredMovie.image}
           alt={featuredMovie.title}

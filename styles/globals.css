@@ -1,10 +1,11 @@
-@tailwind base;
-
+/* @tailwind base; */
+@import "tailwindcss/preflight";
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
-@tailwind components;
 @tailwind utilities;
+@tailwind utilities;
+@import "plyr/dist/plyr.css";
 
 /* Cine Flow Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");

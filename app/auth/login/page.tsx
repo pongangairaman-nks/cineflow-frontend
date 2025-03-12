@@ -1,12 +1,13 @@
 "use client";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../../redux/slices/authSlice";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../../redux/slices/authSlice";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { AppDispatch, RootState } from "../../../redux/store";
 
 interface LoginForm {
   email: string;
@@ -14,9 +15,14 @@ interface LoginForm {
 }
 
 export default function Home() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const {
+    token,
+    status,
+    error: authError
+  } = useSelector((state: RootState) => state.auth);
 
   const {
     register,
@@ -26,27 +32,22 @@ export default function Home() {
     mode: "onBlur"
   });
 
-  const handleLogin = async (data: LoginForm) => {
+  const handleLogin = (data: LoginForm) => {
     setError(null);
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email: data.email, password: data.password })
-      });
-      const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message || "Login Failed");
-      dispatch(login({ email: data.email, token: responseData.token }));
-      console.log("Login Success");
-      router.push("/success?type=login");
+      dispatch(loginUser(data));
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.log(err.message);
       setError(err.message);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      router.push("/success?type=login");
+    }
+  }, [router, token]);
   return (
     <div className="auth-container">
       <div className="absolute inset-0 bg-[url('/netflix-bg.jpg')] bg-cover bg-center opacity-50 w-[100vw] h-[100vh]"></div>
@@ -98,7 +99,7 @@ export default function Home() {
             className="bg-[var(--foreground)] text-white font-semibold py-3"
             disabled={!isValid}
           >
-            Sign In
+            {status === "loading" ? "Signing In..." : "Sign In"}
           </Button>
         </form>
 
@@ -108,6 +109,10 @@ export default function Home() {
             Sign up now
           </Link>
         </div>
+        {/* ✅ Error Message */}
+        {authError && (
+          <p className="text-red-500 text-sm text-center mt-2">{authError}</p>
+        )}
       </div>
     </div>
   );

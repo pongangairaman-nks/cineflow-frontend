@@ -31,6 +31,8 @@ const initialState: IVideoState = {
 //createAsyncThunk - automatically tracks loading, success, error states
 
 const API_URL = process.env.API_URL || "http://localhost:5000/api";
+
+//for the api call
 export const fetchVideos = createAsyncThunk<
   IVideo[],
   void,

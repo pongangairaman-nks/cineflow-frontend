@@ -1,12 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL =
-  process.env.CINEFLOW_BACKEND_URL || "http://localhost:5000/api/auth";
+const API_URL = process.env.CINEFLOW_BACKEND_URL || "http://localhost:5000/api";
 
 //Creation of User Slice with initial state and reducers
 
+interface Iprofile {
+  name: string;
+  email: string;
+  profileUrl: string;
+}
 interface IUser {
-  profile: unknown;
+  profile: Iprofile | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }

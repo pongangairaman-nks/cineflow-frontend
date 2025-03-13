@@ -8,8 +8,12 @@ import HeroSection from "../../components/HeroSection";
 import { RootState, AppDispatch } from "../../redux/store";
 import { fetchVideos } from "../../redux/slices/videoSlice";
 import VideoRowNew from "../../components/VideoRowNew";
+import { useAuth } from "../../hooks/userAuth";
+// import { useAuth } from "../../hooks/userAuth";
 
 export default function Dashboard() {
+  // useAuth();
+
   // dispatches an action the redux store
   const dispatch: AppDispatch = useDispatch();
   const {
@@ -22,6 +26,8 @@ export default function Dashboard() {
     dispatch(fetchVideos());
   }, []);
 
+  const authCheck = useAuth();
+  if (!authCheck) return null;
   return (
     <div className="bg-black text-white min-h-screen">
       <Navbar />

@@ -8,7 +8,11 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"; // ✅ ShadCN UI
 import { Video as PlayIcon } from "lucide-react"; // ✅ Play button icon
 import { DialogTitle } from "@radix-ui/react-dialog";
 import Plyr from "plyr-react";
-
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import InsertCommentOutlinedIcon from "@mui/icons-material/InsertCommentOutlined";
+import { commentVideo, likeVideo } from "../redux/slices/videoSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
 interface IVideoProps {
   _id: string;
   title: string;
@@ -30,9 +34,13 @@ export default function VideoRow({
   videos,
   fetchMoreVideos
 }: IVideoRowProps) {
+  const dispatch = useDispatch<AppDispatch>();
   const rowRef = useRef<HTMLDivElement>(null); // ✅ Reference for scrolling
   const [selectedVideo, setSelectedVideo] = useState<IVideoProps | null>(null); // ✅ State for modal popup
 
+  const [text, setText] = useState("");
+  const [commentsVisible, setCommentsVisible] = useState(false);
+  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null); // ✅ State for modal popup
   /**
    * 📌 scrollRow - Moves the video row left or right
    */
@@ -54,7 +62,7 @@ export default function VideoRow({
   const handleVideoClick = (video: IVideoProps) => {
     setSelectedVideo(video);
   };
-
+  console.log("selectedVideoId", selectedVideoId);
   return (
     <section className="relative group">
       {/* ✅ Video Category Title */}
@@ -83,29 +91,69 @@ export default function VideoRow({
           }
         }}
       >
-        {videos?.map((video) => (
-          <motion.div
-            key={video._id}
-            className="relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-110 hover:z-10"
-            onClick={() => handleVideoClick(video)}
-          >
-            {/* ✅ Video Poster */}
-            <div className="relative w-48 md:w-56 lg:w-64 rounded-md overflow-hidden">
-              <Image
-                src={video.posterUrl}
-                alt={video.title}
-                width={250}
-                height={375}
-                className="rounded-md object-cover w-full h-full"
-                priority
-              />
-              {/* ✅ Play Button on Hover */}
-              <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 flex items-center justify-center transition-all">
-                <PlayIcon size={50} className="text-white" />
+        {videos?.map((video) => {
+          return (
+            <motion.div
+              key={video._id}
+              className="relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-110 hover:z-10"
+              onClick={() => {
+                //  handleVideoClick(video)
+                // console.log("video._id",video._id)
+                // setSelectedVideoId(video._id);
+              }}
+            >
+              {/* ✅ Video Poster */}
+              <div className="relative w-48 md:w-56 lg:w-64 rounded-md overflow-hidden">
+                <Image
+                  src={video.posterUrl}
+                  alt={video.title}
+                  width={250}
+                  height={375}
+                  className="rounded-md object-cover w-full h-full"
+                  priority
+                />
+                {/* ✅ Play Button on Hover */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 flex items-center justify-center transition-all">
+                  <PlayIcon size={50} className="text-white" />
+                </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+              <div className="flex justify-around">
+                <div
+                  onClick={() => {
+                    dispatch(likeVideo(video._id));
+                  }}
+                >
+                  <FavoriteBorderIcon />
+                  <div>{video.likes}</div>
+                </div>
+                <div
+                  onClick={() => {
+                    console.log("video._id", video._id);
+                    setSelectedVideoId(video._id);
+                    setCommentsVisible(!commentsVisible);
+                  }}
+                >
+                  <InsertCommentOutlinedIcon />
+                </div>
+                {commentsVisible && selectedVideoId === video._id && (
+                  <div>
+                    <input
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                    />
+                    <button
+                      onClick={() => {
+                        dispatch(commentVideo({ videoId: video._id, text }));
+                      }}
+                    >
+                      submit
+                    </button>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* ✅ Right Scroll Button */}

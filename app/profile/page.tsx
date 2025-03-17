@@ -23,7 +23,6 @@ import { fetchUserProfile } from "../../redux/slices/userSlice";
 export default function ProfilePage() {
   const dispatch = useDispatch<AppDispatch>();
   const { profile } = useSelector((state: RootState) => state.user);
-  console.log("profile", profile);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [name, setName] = useState(profile?.name || "");
   const [email, setEmail] = useState(profile?.email || "");

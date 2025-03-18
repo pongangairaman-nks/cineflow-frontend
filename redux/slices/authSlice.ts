@@ -24,8 +24,9 @@ interface loginPayload {
   email: string;
   password: string;
 }
-const API_URL =
-  process.env.CINEFLOW_BACKEND_URL || "http://localhost:5000/api/auth";
+const NEXT_PUBLIC_API_URL =
+  process.env.NEXT_PUBLIC_CINEFLOW_BACKEND_URL ||
+  "http://localhost:5000/api/auth";
 
 //Creation of Auth Slice with initial state and reducers
 export const loginUser = createAsyncThunk(
@@ -36,7 +37,7 @@ export const loginUser = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await fetch(`${API_URL}/login`, {
+      const response = await fetch(`${NEXT_PUBLIC_API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

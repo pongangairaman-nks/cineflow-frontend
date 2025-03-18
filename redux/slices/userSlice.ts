@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const API_URL = process.env.CINEFLOW_BACKEND_URL || "http://localhost:5000/api";
+const NEXT_PUBLIC_API_URL =
+  process.env.NEXT_PUBLIC_CINEFLOW_BACKEND_URL || "http://localhost:5000/api";
 
 //Creation of User Slice with initial state and reducers
 
@@ -23,7 +24,7 @@ export const fetchUserProfile = createAsyncThunk(
   "/user/profile",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${API_URL}/user/profile`, {
+      const response = await fetch(`${NEXT_PUBLIC_API_URL}/user/profile`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

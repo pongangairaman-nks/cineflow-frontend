@@ -10,14 +10,20 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import Plyr from "plyr-react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import InsertCommentOutlinedIcon from "@mui/icons-material/InsertCommentOutlined";
-import { commentVideo, likeVideo } from "../redux/slices/videoSlice";
+import {
+  commentVideo,
+  // fetchVideoDescription,
+  likeVideo
+} from "../redux/slices/videoSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
+import { useRouter } from "next/navigation";
 interface IVideoProps {
   _id: string;
   title: string;
   type: string;
   genre: string;
+  likes: number;
   url: string; //s3 video url
   posterUrl: string; //s3 poster url
   createdAt: string;
@@ -26,14 +32,20 @@ interface IVideoProps {
 interface IVideoRowProps {
   title: string;
   videos: IVideoProps[];
+  videoLikesLatest: {
+    likes: number;
+    videoId: string;
+  }[];
   fetchMoreVideos: () => void; // ✅ Function for Infinite Scrolling
 }
 
 export default function VideoRow({
   title,
   videos,
+  videoLikesLatest,
   fetchMoreVideos
 }: IVideoRowProps) {
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const rowRef = useRef<HTMLDivElement>(null); // ✅ Reference for scrolling
   const [selectedVideo, setSelectedVideo] = useState<IVideoProps | null>(null); // ✅ State for modal popup
@@ -59,10 +71,12 @@ export default function VideoRow({
   /**
    * 📌 handleVideoClick - Opens the Video Details Modal
    */
-  const handleVideoClick = (video: IVideoProps) => {
-    setSelectedVideo(video);
+  const handleVideoClick = (videoId: string) => {
+    // setSelectedVideo(video);
+    router.push(`/video/${videoId}`);
   };
-  console.log("selectedVideoId", selectedVideoId);
+  // console.log("selectedVideoId", selectedVideoId);
+
   return (
     <section className="relative group">
       {/* ✅ Video Category Title */}
@@ -92,12 +106,15 @@ export default function VideoRow({
         }}
       >
         {videos?.map((video) => {
+          const latestLike = videoLikesLatest?.find(
+            (item) => item.videoId === video._id
+          );
           return (
             <motion.div
               key={video._id}
               className="relative flex-shrink-0 cursor-pointer transition-all duration-300 hover:scale-110 hover:z-10"
               onClick={() => {
-                //  handleVideoClick(video)
+                handleVideoClick(video._id);
                 // console.log("video._id",video._id)
                 // setSelectedVideoId(video._id);
               }}
@@ -124,7 +141,7 @@ export default function VideoRow({
                   }}
                 >
                   <FavoriteBorderIcon />
-                  <div>{video.likes}</div>
+                  <div>{latestLike?.likes || video.likes}</div>
                 </div>
                 <div
                   onClick={() => {

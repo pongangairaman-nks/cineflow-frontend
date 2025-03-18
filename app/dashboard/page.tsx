@@ -17,7 +17,8 @@ export default function Dashboard() {
   // dispatches an action the redux store
   const dispatch: AppDispatch = useDispatch();
   const {
-    videos
+    videos,
+    videoLikesLatest
     //  status
   } = useSelector((state: RootState) => state.videos);
 
@@ -36,6 +37,7 @@ export default function Dashboard() {
       <VideoRowNew
         title="Trending Now"
         videos={videos}
+        videoLikesLatest={videoLikesLatest}
         fetchMoreVideos={fetchVideos}
       />
     </div>

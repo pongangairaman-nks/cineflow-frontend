@@ -9,6 +9,7 @@ interface IVideoProps {
   title: string;
   type: string;
   genre: string;
+  likes: number;
   url: string; //s3 video url
   posterUrl: string; //s3 poster url
   createdAt: string;

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { login } from "../../../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { login, userRegister } from "../../../redux/slices/authSlice";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -15,44 +15,59 @@ interface SignUpForm {
 }
 
 export default function Home() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid }
+    formState: { errors, isValid },
   } = useForm<SignUpForm>({
-    mode: "onBlur"
+    mode: "onBlur",
   });
 
-  const handleSignUp = async (data: SignUpForm) => {
-    setError(null);
-    try {
-      const response = await fetch(`http://localhost:5000/api/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          password: data.password
-        })
-      });
-      const responseData = await response.json();
-      if (!response.ok)
-        throw new Error(responseData.message || "SignUp Failed");
-      console.log("Sign Up Success");
-      alert(responseData.message);
-      router.push("/success?type=signup");
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      console.log(err.message);
-      setError(err.message);
+  // const handleSignUp = async (data: SignUpForm) => {
+  //   setError(null);
+  //   try {
+  //     const response = await fetch(`http://localhost:5000/api/auth/register`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({
+  //         name: data.name,
+  //         email: data.email,
+  //         password: data.password
+  //       })
+  //     });
+  //     const responseData = await response.json();
+  //     if (!response.ok)
+  //       throw new Error(responseData.message || "SignUp Failed");
+  //     console.log("Sign Up Success");
+  //     alert(responseData.message);
+  //     router.push("/success?type=signup");
+  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //   } catch (err: any) {
+  //     console.log(err.message);
+  //     setError(err.message);
+  //   }
+  // };
+
+  const handleSignup = async (data: SignUpForm) => {
+    console.log(data,"register")
+    const res : any = await dispatch(
+      userRegister({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      })
+    );
+    if(res.payload.status == 201){
+      router.push("/dashboard")
     }
   };
+
   return (
     <div className="auth-container">
       <div className="absolute inset-0 bg-[url('/netflix-bg.jpg')] bg-cover bg-center opacity-50 w-[100vw] h-[100vh]"></div>
@@ -67,14 +82,14 @@ export default function Home() {
 
         <form
           className="mt-6 flex flex-col space-y-4"
-          onSubmit={handleSubmit(handleSignUp)}
+          onSubmit={handleSubmit(handleSignup)}
         >
           <Input
             type="name"
             placeholder="Name"
             required={true}
             {...register("name", {
-              required: "Name is required"
+              required: "Name is required",
             })}
           />
           {errors.name && (
@@ -88,8 +103,8 @@ export default function Home() {
               required: "Email is required",
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                message: "Enter a valid email"
-              }
+                message: "Enter a valid email",
+              },
             })}
           />
           {errors.email && (
@@ -103,8 +118,8 @@ export default function Home() {
               required: "Password is required",
               minLength: {
                 value: 6,
-                message: "Password must be at least 6 characters"
-              }
+                message: "Password must be at least 6 characters",
+              },
             })}
           />
           {errors.password && (

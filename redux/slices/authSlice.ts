@@ -24,9 +24,11 @@ interface loginPayload {
   email: string;
   password: string;
 }
-const NEXT_PUBLIC_API_URL =
-  process.env.NEXT_PUBLIC_CINEFLOW_BACKEND_URL ||
-  "http://localhost:5000/api/auth";
+// const NEXT_PUBLIC_API_URL =
+//   process.env.NEXT_PUBLIC_CINEFLOW_BACKEND_URL ||
+//   "http://localhost:5000/api/auth";
+
+const NEXT_PUBLIC_API_URL = "http://localhost:5000/api/auth";
 
 //Creation of Auth Slice with initial state and reducers
 export const loginUser = createAsyncThunk(

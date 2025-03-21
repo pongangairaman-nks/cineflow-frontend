@@ -55,18 +55,22 @@ export default function Home() {
   // };
 
   const handleSignup = async (data: SignUpForm) => {
-    console.log(data,"register")
-    const res : any = await dispatch(
+    console.log(data, "register");
+    const res: any = await dispatch(
       userRegister({
         name: data.name,
         email: data.email,
         password: data.password,
       })
     );
-    if(res.payload.status == 201){
-      router.push("/dashboard")
+    if (res.payload.status == 201) {
+      router.push("/dashboard");
     }
   };
+
+  // const handleplans = ()=>{
+  //   router.push("/subscription")
+  // }
 
   return (
     <div className="auth-container">
@@ -140,6 +144,11 @@ export default function Home() {
             Sign In
           </Link>
         </div>
+         <div className="plans">
+         <Link  href={"/subscription"} style={{textDecoration:"none"}}>
+          Click here to check the Plans...
+        </Link>
+         </div>
       </div>
     </div>
   );

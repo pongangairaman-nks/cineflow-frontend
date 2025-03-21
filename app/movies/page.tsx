@@ -11,8 +11,10 @@ const Movies = () => {
   const dispatch: AppDispatch = useDispatch();
   const {movies} = useSelector((state:RootState)=>state.movie)
   const featuredMovie = {
+    urlName:"jurasic-world",
     title: "Jurasic World",
     image: "https://cineflow-bucket.s3.eu-north-1.amazonaws.com/poster/jurassic-world.jpg",
+    videoUrl:"https://cineflow-bucket.s3.eu-north-1.amazonaws.com/videos/Jurassic+World.mp4",
     description: "Where Dinosaurs Roam, Adventure Awaits at Every Turn",
   };
 

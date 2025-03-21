@@ -31,6 +31,13 @@ body {
   background: var(--background);
   color: var(--textColor);
   font-family: var(--font);
+  -ms-overflow-style: none !important;  /* IE and Edge */
+    /* scrollbar-width: none;    Firefox */
+  overflow-y: scroll;  
+}
+
+body::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari */
 }
 
 /* ✅ Background Image Overlay */
@@ -164,6 +171,7 @@ a {
   height: 100vh; /* Full viewport height */
   color: white;
   overflow: hidden;
+  
 }
 
 /* Overlay to darken the background */
@@ -183,6 +191,7 @@ a {
   z-index: 2;
   max-width: 800px;
   padding: 20px;
+  /* background: linear-gradient(to top, transparent, rgba(0, 0, 0, 0.2)); */
   /* text-align: center; */
 }
 
@@ -419,11 +428,13 @@ a {
   font-size: 20px;
   font-family: "Netflix Sans";
   font-weight: 600;
+  line-height: 40px;
 }
 .show-des{
    color: #ffffff;
    font-size: 18px;
    font-family:"Netflix Sans" ;
+   text-align: justify;
    /* position: relative; */
    /* bottom: 80px; */
 }
@@ -440,7 +451,7 @@ a {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   cursor: pointer;
 }
 
@@ -467,6 +478,57 @@ a {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+}
+
+.plans{
+  margin-top: 20px;
+  font-size: 15px;
+  font-family:"Netflix Sans" ;
+  font-weight: 800;
+  text-decoration: none;
+
+}
+
+.subscription-card {
+  width: 300px;
+  height: 300px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(149deg, #6C1E41 6.96%, #251743 40.17%, #120c1f 73.39%);
+  border: 1px solid grey;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease-in-out;
+}
+.subscription-card:hover{
+  transform: scale(1.05);
+  cursor: pointer;
+  background: linear-gradient(149deg, #6C1E41 6.96%, #251743 40.17%, #120c1f 73.39%);
+}
+
+.subscription-card h3 {
+  margin: 15px 0;
+  font-size: 1.5rem;
+}
+.subscription-card p {
+  color: #666;
+  font-size: 1rem;
+}
+.subscription-card button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.subscription-card button:hover {
+  background: #0056b3;
+
 }
 /* Left Wing with Gradient */
 

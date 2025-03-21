@@ -12,9 +12,11 @@ const TvShows = () => {
   const dispatch: AppDispatch = useDispatch();
   const {tvShows} = useSelector((state:RootState)=>state.movie)
   const featuredMovie = {
-    title: "Shogun",
-    image: "https://cineflow-bucket.s3.eu-north-1.amazonaws.com/poster/shogun.jpg",
-    description: "A nation of violence, Samurai warriors ... and forbidden love.",
+    urlName:"kung-fu-panda",
+    title: "kung fu panda",
+    image: "https://cineflow-bucket.s3.eu-north-1.amazonaws.com/poster/kung-fu-panda.jpg",
+    videoUrl:"https://cineflow-bucket.s3.eu-north-1.amazonaws.com/videos/KUNG+FU+PANDA+4.mp4",
+    description: "There is no secret ingredient. It’s just you.",
   };
 
      useEffect(() => {

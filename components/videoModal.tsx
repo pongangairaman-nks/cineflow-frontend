@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, CSSProperties } from "react";
+import React, { useRef, useState, CSSProperties, useEffect } from "react";
 import Plyr from "plyr-react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactModal from "react-modal";
@@ -34,18 +34,31 @@ const VideoModal = () => {
   };
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
+  const [items, setItems] = useState<string[][]>([]);
   // const playerRef = useRef<any>(null);
   const { selectedMovie, showDialog, clickedCard, showDes } = useSelector(
     (state: any) => state.movie
   );
-  console.log(showDialog, "showDialog");
-  console.log(clickedCard, "clickedCard");
+  // console.log(showDialog, "showDialog");
+  // console.log(clickedCard, "clickedCard");
   // const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const storedItems = localStorage.getItem("myLists");
+    if (storedItems) {
+      try {
+        setItems(JSON.parse(storedItems)); // Ensure data is parsed properly
+      } catch (error) {
+        console.error("Error parsing localStorage data", error);
+        setItems([]); // Reset to empty array if JSON is invalid
+      }
+    }
+  }, []);
 
   const handleModal = (event: any) => {
     // event.stopPropagation()
     dispatch(updateUserWatchHistory(clickedCard?._id));
-    console.log("click");
+    // console.log("click");
     dispatch(setShowDialog(!showDialog));
     router.push(`video/${clickedCard?._id}`);
     dispatch(setStoreMovie(clickedCard?.url));
@@ -56,6 +69,17 @@ const VideoModal = () => {
     //   playerRef.current.seekTo(0); // Optionally reset the video to the beginning
     //   playerRef.current.stop(); // Stop the video
     // }
+  };
+  const handleWatchList = (clickedCard: any) => {
+    const isExist = items?.some((ele: any) => ele?._id == clickedCard?._id);
+    if (!isExist) {
+      const newArr = [...items, clickedCard];
+      const updatedItems = newArr;
+      setItems(updatedItems); // Update state
+      localStorage.setItem("myLists", JSON.stringify(updatedItems));
+    }
+
+    dispatch(setShowDialog(false));
   };
   return (
     <div>
@@ -107,6 +131,9 @@ const VideoModal = () => {
                   />
                   <AddCircleOutlineIcon
                     sx={{ color: "white", height: "35px", width: "35px" }}
+                    onClick={() => {
+                      handleWatchList(clickedCard);
+                    }}
                   />
                   <ThumbUpOffAltIcon
                     sx={{ color: "white", height: "35px", width: "35px" }}

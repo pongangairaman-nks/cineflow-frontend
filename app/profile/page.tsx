@@ -3,8 +3,9 @@
 // import { useAuth } from "../../hooks/userAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import Image from "next/image";
 // import { Menu, X, Upload } from "lucide-react";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
@@ -12,54 +13,59 @@ import {
   Container,
   Box,
   Typography,
-  Paper
+  Paper,
+  Card,
 } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import {fetchUserProfile, updateAvatar} from "../../redux/slices/userSlice"
-import {AppDispatch} from "../../redux/store"
+import { fetchUserProfile, updateAvatar } from "../../redux/slices/userSlice";
+import { AppDispatch } from "../../redux/store";
 import { logout } from "../../redux/slices/authSlice";
 import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
-  const dispatch = useDispatch<AppDispatch>()
-  const router = useRouter()
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const { profile } = useSelector((state: RootState) => state.userSlice);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [selectedFile,setSelectedFile] = useState<any>()
+  const [selectedFile, setSelectedFile] = useState<any>();
+  const [mywatchList, setMywatchList] = useState<any>([]);
 
-  const handleAvatarChange = (event:any) => {
+  const handleAvatarChange = (event: any) => {
     // const selectedImage = event.target.files[0]
-    setSelectedFile(event.target.files[0])
-    const formData :any= new FormData();
-    formData.append('avatar', selectedFile);
-    console.log(formData,"formData")
+    setSelectedFile(event.target.files[0]);
+    const formData: any = new FormData();
+    formData.append("avatar", selectedFile);
+    // console.log(formData, "formData");
 
-    dispatch(updateAvatar(formData))
+    dispatch(updateAvatar(formData));
   };
 
-  console.log(profile,"profile")
+  // console.log(profile, "profile");
 
   useEffect(() => {
     dispatch(fetchUserProfile("arg"));
+    const watcherLater = JSON.parse(localStorage.getItem("myLists"));
+    // console.log(watcherLater, "later");
+    setMywatchList(watcherLater);
   }, []);
 
-  useEffect(()=>{
-    if(profile){
-      setName(profile?.name)
-      setEmail(profile?.email)
-      setAvatar(profile?.profileUrl)
+  useEffect(() => {
+    if (profile) {
+      setName(profile?.name);
+      setEmail(profile?.email);
+      setAvatar(profile?.profileUrl);
     }
-  },[profile])
+  }, [profile]);
 
-  const handleLogout = ()=>{
-    dispatch(logout())
-    router.push("/auth/login")
-  }
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push("/auth/login");
+  };
 
   return (
     <Box
@@ -67,11 +73,11 @@ export default function ProfilePage() {
         display: "flex",
         minHeight: "100vh",
         bgcolor: "black",
-        color: "white"
+        color: "white",
       }}
     >
       {/* ✅ Collapsible Sidebar */}
-      <Box
+      {/* <Box
         sx={{
           width: sidebarOpen ? 250 : 60,
           transition: "width 0.3s",
@@ -125,15 +131,45 @@ export default function ProfilePage() {
             </Box>
           </>
         )}
-      </Box>
+      </Box> */}
 
       {/* ✅ Settings Panel */}
       <Container sx={{ flex: 1, py: 6 }}>
         <Typography variant="h4">Profile</Typography>
-        <Typography variant="body2" color="grey.500">
-          This is how others will see you on the site.
-        </Typography>
-
+       
+        {mywatchList && (
+          <>
+            <Typography variant="body2" color="grey.500">
+           My List
+         </Typography>
+          <Paper sx={{ bgcolor: "grey.900", p: 4, mt: 4, borderRadius: 2 }}>
+            <div className="my-list">
+              {mywatchList &&
+                mywatchList?.map((ele: any, index: number) => (
+                  <>
+                    <div className="card">
+                      <div className="card-image-container">
+                        <Image
+                          src={ele?.poster}
+                          alt={ele?.title}
+                          //   layout="fill"
+                          width={300}
+                          height={300}
+                          objectFit="cover"
+                          unoptimized
+                        />
+                        <h3 className="card-title">{ele?.title}</h3>
+                      </div>
+                      {/* <div className="card-content">
+                       <p className="card-description">{description}</p>
+                     </div> */}
+                    </div>
+                  </>
+                ))}
+            </div>
+          </Paper></>
+         
+        )}
         <Paper sx={{ bgcolor: "grey.900", p: 4, mt: 4, borderRadius: 2 }}>
           <Typography variant="h6" sx={{ color: "white" }}>
             Profile Settings
@@ -175,7 +211,7 @@ export default function ProfilePage() {
                 bgcolor: "grey.800",
                 borderRadius: 1,
                 input: { color: "white" },
-                label: { color: "grey.500" }
+                label: { color: "grey.500" },
               }}
             />
           </Box>
@@ -192,7 +228,7 @@ export default function ProfilePage() {
                 bgcolor: "grey.800",
                 borderRadius: 1,
                 input: { color: "white" },
-                label: { color: "grey.500" }
+                label: { color: "grey.500" },
               }}
             />
           </Box>
@@ -201,7 +237,11 @@ export default function ProfilePage() {
           <Button variant="contained" color="error" sx={{ mt: 4 }}>
             Save Changes
           </Button>
-          <Button variant="contained"  sx={{ mt: 4,ml:4,backgroundColor:"grey",color:"white" }} onClick={handleLogout}>
+          <Button
+            variant="contained"
+            sx={{ mt: 4, ml: 4, backgroundColor: "grey", color: "white" }}
+            onClick={handleLogout}
+          >
             Logout
           </Button>
         </Paper>

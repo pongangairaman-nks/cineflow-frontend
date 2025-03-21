@@ -131,6 +131,22 @@ a {
   transition: background 0.3s ease;
 }
 
+.Scrollednavbar{
+  /* background: #120c1f; */
+  display: flex;
+  justify-content: space-between; /* Space out logo and menu */
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(to top, transparent, rgba(0, 0, 0, 30.9));
+  color: white;
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+
 .logo Link {
   text-decoration: none;
   color: white;
@@ -529,6 +545,12 @@ a {
 .subscription-card button:hover {
   background: #0056b3;
 
+}
+.my-list{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 /* Left Wing with Gradient */
 

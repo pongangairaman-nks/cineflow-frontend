@@ -6,9 +6,9 @@ import { useDispatch } from "react-redux";
 import{setStoreMovie,setShowDialog, setClickedcard, fetchVideoDescription} from "../redux/slices/movieSlice"
 
 interface CardProps {
-  imageUrl: string;
-  title: string;
-  videoUrl: string;
+  imageUrl: any;
+  title: any;
+  videoUrl: any;
   ele:any
 }
 

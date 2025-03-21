@@ -1,19 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   //Detect scrolling and changing navbar background
-  if (typeof window !== "undefined") {
-    window.addEventListener("scroll", () => {
-      setIsScrolled(window.scrollY > 50);
-    });
-  }
-
+  // if (typeof window !== "undefined") {
+  //   window.addEventListener("scroll", () => {
+  //     setIsScrolled(window.scrollY > 50);
+  //   });
+  // }
+// console.log(scrollY,"Y")
   return (
     // <motion.nav
     //   initial={{ opacity: 0 }}
@@ -46,7 +58,7 @@ export default function Navbar() {
     // </motion.nav>
 
     <motion.header
-      className="navbar"
+      className={scrollY < 40 ? "navbar" : "Scrollednavbar"}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}

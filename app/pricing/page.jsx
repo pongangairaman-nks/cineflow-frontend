@@ -1,23 +1,25 @@
 "use client";
 
 import React from "react";
+import { loadStripe } from "@stripe/stripe-js";
 
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY);
 const plans = [
   {
     name: "Basic",
-    price: "$8.99/month",
+    price: 99,
     description: "Good Quality - 720p Resolution",
     nunmerOfDevices: "1 Device"
   },
   {
     name: "Standard",
-    price: "$13.99/month",
+    price: 199,
     description: "Better Quality - 1080p Resolution",
     nunmerOfDevices: "2 Device"
   },
   {
     name: "Premium",
-    price: "$17.99/month",
+    price: 499,
     description: "Best Quality - 4K + HDR",
     nunmerOfDevices: "4 Devices"
   }
@@ -50,7 +52,7 @@ const buttonStyle = {
   transition: "background 0.3s ease-in-out"
 };
 
-const SubscriptionCard = ({ plan }) => {
+const SubscriptionCard = ({ plan, handleCheckout }) => {
   return (
     <div
       style={cardStyle}
@@ -71,6 +73,7 @@ const SubscriptionCard = ({ plan }) => {
       </p>
       <button
         style={buttonStyle}
+        onClick={() => handleCheckout(plan.name, plan.price)}
         onMouseEnter={(e) => (e.currentTarget.style.background = "#b20710")}
         onMouseLeave={(e) => (e.currentTarget.style.background = "#e50914")}
       >
@@ -81,6 +84,25 @@ const SubscriptionCard = ({ plan }) => {
 };
 
 const SubscriptionCards = () => {
+  const handleCheckout = async (name, price) => {
+    const res = await fetch("/api/checkout-session", {
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        price: price,
+        origin: window.location.origin
+      })
+    });
+
+    const { id } = await res.json();
+
+    const stripe = await stripePromise;
+
+    stripe?.redirectToCheckout({
+      sessionId: id
+    });
+  };
+
   return (
     <div
       style={{
@@ -107,7 +129,11 @@ const SubscriptionCards = () => {
         }}
       >
         {plans.map((plan, index) => (
-          <SubscriptionCard key={index} plan={plan} />
+          <SubscriptionCard
+            key={index}
+            plan={plan}
+            handleCheckout={handleCheckout}
+          />
         ))}
       </div>
     </div>

@@ -4,10 +4,10 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import { Dialog, DialogContent } from "@/components/ui/dialog"; // ✅ ShadCN UI Modal for video details
+// import { Dialog, DialogContent } from "@/components/ui/dialog"; // ✅ ShadCN UI Modal for video details
 import { Video as PlayIcon } from "lucide-react"; // ✅ Play button icon
-import { DialogTitle } from "@radix-ui/react-dialog";
-import Plyr from "plyr-react";
+// import { DialogTitle } from "@radix-ui/react-dialog";
+// import Plyr from "plyr-react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import InsertCommentOutlinedIcon from "@mui/icons-material/InsertCommentOutlined";
 import {
@@ -48,7 +48,7 @@ export default function VideoRow({
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const rowRef = useRef<HTMLDivElement>(null); // ✅ Reference for scrolling
-  const [selectedVideo, setSelectedVideo] = useState<IVideoProps | null>(null); // ✅ State for modal popup
+  // const [selectedVideo, setSelectedVideo] = useState<IVideoProps | null>(null); // ✅ State for modal popup
 
   const [text, setText] = useState("");
   const [commentsVisible, setCommentsVisible] = useState(false);
@@ -181,14 +181,13 @@ export default function VideoRow({
       />
 
       {/* ✅ Video Details Modal */}
-      {selectedVideo && (
+      {/* {selectedVideo && (
         <Dialog
           open={Boolean(selectedVideo)}
           onOpenChange={() => setSelectedVideo(null)}
         >
           <DialogTitle>{selectedVideo.title}</DialogTitle>
           <DialogContent className="max-w-2xl bg-black text-white">
-            {/* ✅ Video Poster */}
             <Image
               src={selectedVideo.posterUrl}
               alt={selectedVideo.title}
@@ -196,11 +195,7 @@ export default function VideoRow({
               height={450}
               className="rounded-md"
             />
-            {/* ✅ Video Details */}
             <h2 className="text-2xl font-bold">{selectedVideo.title}</h2>
-            {/* <p className="text-gray-400">{selectedVideo.description || "No description available."}</p> */}
-
-            {/* ✅ Play Video Preview if available */}
             {selectedVideo.url && (
               <Plyr
                 source={{
@@ -226,7 +221,7 @@ export default function VideoRow({
             )}
           </DialogContent>
         </Dialog>
-      )}
+      )} */}
     </section>
   );
 }

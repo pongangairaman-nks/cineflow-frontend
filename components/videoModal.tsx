@@ -6,6 +6,7 @@ import ReactModal from "react-modal";
 import ReactPlayer from "react-player";
 import { AppDispatch } from "../redux/store";
 import {
+  addCommentToVideo,
   setShowDialog,
   setStoreMovie,
   updateUserWatchHistory,
@@ -24,7 +25,7 @@ import { useRouter } from "next/navigation";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import CommentIcon from "@mui/icons-material/Comment";
 import ClipLoader from "react-spinners/ClipLoader";
-import { TextField } from "@mui/material";
+import { TextField, Tooltip } from "@mui/material";
 
 // ReactModal.setAppElement('#__next');
 const VideoModal = () => {
@@ -42,8 +43,8 @@ const VideoModal = () => {
   // const playerRef = useRef<any>(null);
   const { selectedMovie, showDialog, clickedCard, showDes, commentResponse } =
     useSelector((state: any) => state.movie);
-  console.log(commentResponse, "commentResponse");
-  // console.log(clickedCard, "clickedCard");
+  console.log(inputComment, "inputComment");
+  console.log(clickedCard, "clickedCard");
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -86,7 +87,11 @@ const VideoModal = () => {
   };
 
   const handleComment = () => {
-    setShowCommentBox(true);
+    const commentData = {
+      videoId: clickedCard?._id,
+      text: inputComment,
+    };
+    dispatch(addCommentToVideo(commentData));
   };
   return (
     <div>
@@ -127,28 +132,38 @@ const VideoModal = () => {
               </CardContent>
               <div className="show-data">
                 <div className="show-actions">
-                  <PlayCircleOutlineIcon
-                    sx={{
-                      color: "white",
-                      height: "35px",
-                      width: "35px",
-                      zIndex: 999,
-                    }}
-                    onClick={handleModal}
-                  />
-                  <AddCircleOutlineIcon
-                    sx={{ color: "white", height: "35px", width: "35px" }}
-                    onClick={() => {
-                      handleWatchList(clickedCard);
-                    }}
-                  />
-                  <ThumbUpOffAltIcon
-                    sx={{ color: "white", height: "35px", width: "35px" }}
-                  />
-                  <CommentIcon
-                    sx={{ color: "white", height: "35px", width: "35px" }}
-                    onClick={handleComment}
-                  />
+                  <Tooltip title="Play Video">
+                    <PlayCircleOutlineIcon
+                      sx={{
+                        color: "white",
+                        height: "35px",
+                        width: "35px",
+                        zIndex: 999,
+                      }}
+                      onClick={handleModal}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Add to Watchlist">
+                    <AddCircleOutlineIcon
+                      sx={{ color: "white", height: "35px", width: "35px" }}
+                      onClick={() => {
+                        handleWatchList(clickedCard);
+                      }}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Like">
+                    <ThumbUpOffAltIcon
+                      sx={{ color: "white", height: "35px", width: "35px" }}
+                    />
+                  </Tooltip>
+                  <Tooltip title="Add Comment" sx={{ color: "white" }}>
+                    <CommentIcon
+                      sx={{ color: "white", height: "35px", width: "35px" }}
+                      onClick={() => {
+                        setShowCommentBox(true);
+                      }}
+                    />
+                  </Tooltip>
                 </div>
                 <div className="show-info">
                   <FiberManualRecordIcon
@@ -215,7 +230,7 @@ const VideoModal = () => {
                   <div className="submit-parent">
                     <button className="moreInfoBtn" onClick={handleComment}>
                       {" "}
-                     Submit
+                      Submit
                     </button>
                   </div>
                 </div>

@@ -19,7 +19,7 @@ export default function Dashboard() {
   //fetch movies when the component mounts
   useEffect(() => {
     dispatch(fetchVideos());
-    dispatch(getWatchHistory());
+    // dispatch(getWatchHistory());
   }, []);
 
   const featuredMovie = {

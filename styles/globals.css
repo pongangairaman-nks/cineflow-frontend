@@ -369,7 +369,7 @@ a {
   /* padding: 20px; */
   border-radius: 8px;
   width: 90%;
-  max-width: 500px; /* Maximum width */
+  max-width: 700px; /* Maximum width */
   /* height: 80%;  Adjust the height of the modal */
   position: relative;
 }
@@ -458,6 +458,7 @@ a {
 .show-content{
   /* position: absolute; */
   background: black;
+  padding: 5px !important;
 }
 
 .show-actions{

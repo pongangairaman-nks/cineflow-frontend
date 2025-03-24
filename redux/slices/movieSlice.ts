@@ -11,7 +11,8 @@ interface AuthState {
   tvShows: any[];
   clickedCard: any;
   showDes: string;
-  userWatchHistory:any[]
+  userWatchHistory: any[];
+  commentResponse: any;
 }
 
 //Setting up initial state of the auth state values
@@ -19,12 +20,13 @@ const initialState: AuthState = {
   loading: false,
   allVideos: [],
   selectedMovie: "",
-  showDialog: false,
+  showDialog: true,
   movies: [],
   tvShows: [],
   clickedCard: {},
   showDes: "",
-  userWatchHistory:[]
+  userWatchHistory: [],
+  commentResponse: {},
 };
 
 export const fetchVideos = createAsyncThunk("/videos", async () => {
@@ -130,7 +132,7 @@ export const updateUserWatchHistory: any = createAsyncThunk(
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify({
-            videoId:videoId,
+            videoId: videoId,
           }),
         }
       );
@@ -151,12 +153,12 @@ export const updateUserWatchHistory: any = createAsyncThunk(
 
 export const getWatchHistory: any = createAsyncThunk(
   "video/getWatchHistory",
-  async (_,{ rejectWithValue, dispatch }:any) => {
-    console.log("call>>")
+  async (_, { rejectWithValue, dispatch }: any) => {
+    console.log("call>>");
     try {
       //making get request to fetch videos from backend
       const response = await fetch(
-        `http://localhost:5000/api/video/getWatchHistory`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}video/getWatchHistory`,
         {
           method: "GET",
           headers: {
@@ -182,6 +184,43 @@ export const getWatchHistory: any = createAsyncThunk(
   }
 );
 
+export const addCommentToVideo: any = createAsyncThunk(
+  "video/getWatchHistory",
+  async (formData: any, { rejectWithValue, dispatch }: any) => {
+    console.log("call>>");
+    try {
+      //making get request to fetch videos from backend
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/video/${formData?.videoId}/comment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(
+            JSON.stringify({
+              text: formData?.comment,
+            })
+          ),
+        }
+      );
+      //if response is not ok, throw an error
+      if (!response.ok) {
+        throw new Error("Failed to fetch videos");
+      }
+      //parse the json response
+      const data = await response.json();
+      //return the array of video objects from the api response
+      dispatch(setCommentResponse(data));
+      // return { videoId, data };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      //handles and returns errors if any
+      return rejectWithValue(error?.message);
+    }
+  }
+);
 
 //Creation of Auth Slice with initial state and reducers
 const movieSlice = createSlice({
@@ -209,9 +248,12 @@ const movieSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    setUserWatchHistory:(state,action)=>{
-      state.userWatchHistory = action.payload
-    }
+    setUserWatchHistory: (state, action) => {
+      state.userWatchHistory = action.payload;
+    },
+    setCommentResponse: (state, action) => {
+      state.commentResponse = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -239,7 +281,8 @@ export const {
   setClickedcard,
   setShowDes,
   setLoading,
-  setUserWatchHistory
+  setUserWatchHistory,
+  setCommentResponse,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

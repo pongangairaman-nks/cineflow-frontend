@@ -24,9 +24,11 @@ import { useRouter } from "next/navigation";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import CommentIcon from "@mui/icons-material/Comment";
 import ClipLoader from "react-spinners/ClipLoader";
+import { TextField } from "@mui/material";
 
 // ReactModal.setAppElement('#__next');
 const VideoModal = () => {
+  const comments = 3;
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
@@ -35,11 +37,12 @@ const VideoModal = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [items, setItems] = useState<string[][]>([]);
+  const [showCommentBox, setShowCommentBox] = useState<boolean>(false);
+  const [inputComment, setInputComment] = useState<string>("");
   // const playerRef = useRef<any>(null);
-  const { selectedMovie, showDialog, clickedCard, showDes } = useSelector(
-    (state: any) => state.movie
-  );
-  // console.log(showDialog, "showDialog");
+  const { selectedMovie, showDialog, clickedCard, showDes, commentResponse } =
+    useSelector((state: any) => state.movie);
+  console.log(commentResponse, "commentResponse");
   // console.log(clickedCard, "clickedCard");
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -81,6 +84,10 @@ const VideoModal = () => {
 
     dispatch(setShowDialog(false));
   };
+
+  const handleComment = () => {
+    setShowCommentBox(true);
+  };
   return (
     <div>
       {/* <div className="close-button" onClick={closeModal}><CloseIcon/></div> */}
@@ -92,7 +99,7 @@ const VideoModal = () => {
         overlayClassName="modal-overlay"
       >
         {/* <button onClick={handleModal} className="close-button">close</button> */}
-        {clickedCard && showDialog ? (
+        {showDialog ? (
           // <div className="video-container">
           //   <ReactPlayer
           //     ref={playerRef}
@@ -140,6 +147,7 @@ const VideoModal = () => {
                   />
                   <CommentIcon
                     sx={{ color: "white", height: "35px", width: "35px" }}
+                    onClick={handleComment}
                   />
                 </div>
                 <div className="show-info">
@@ -185,6 +193,35 @@ const VideoModal = () => {
                   </div>
                 </div>
               </div>
+              {showCommentBox ? (
+                <div className="comment-section">
+                  <div className="comment-title">{`Total Comments: ${comments}`}</div>
+                  <TextField
+                    fullWidth
+                    placeholder="Add Comment.."
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "&.Mui-focused fieldset": {
+                          borderColor: "red",
+                          // color:"white"
+                        },
+                      },
+                    }}
+                    className="textfield"
+                    onChange={(event: any) => {
+                      setInputComment(event?.target.value);
+                    }}
+                  />
+                  <div className="submit-parent">
+                    <button className="moreInfoBtn" onClick={handleComment}>
+                      {" "}
+                     Submit
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </Card>
           </div>
         ) : (

@@ -6,6 +6,7 @@ import { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import DotLoader from "react-spinners/DotLoader";
 import useAuth from "@/hooks/useAuth";
+import Navbar from "../components/Navbar";
 
 export default function RootLayout({
   children,
@@ -48,6 +49,7 @@ export default function RootLayout({
     <>
       <html lang="en">
         <body>
+          <Navbar />
           <Provider store={store}>
             {children}
           </Provider>

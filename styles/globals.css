@@ -552,6 +552,32 @@ a {
   justify-content: center;
   align-items: center;
 }
+.textfield{
+  /* border: 1px solid red !important; */
+  /* background: #120c1f no-repeat; */
+  padding: 10px !important;
+  color: #ffffff;
+}
+.comment-section{
+  background: #120c1f no-repeat;
+   /* linear-gradient(149deg, #3b3b3b 6.96%, #36454F 40.17%, #36454F 73.39%); */
+}
+.comment-title{
+  color: #ffffff;
+  font-family:"Netflix Sans" ;
+  padding: 3px;
+
+}
+
+.textfield input{
+  color: #ffffff !important;
+}
+.submit-parent{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: end;
+}
 /* Left Wing with Gradient */
 
 /* Right Wing with Gradient */

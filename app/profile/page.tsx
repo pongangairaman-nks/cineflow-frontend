@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "../../hooks/userAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 // import { Menu, X, Upload } from "lucide-react";
@@ -26,10 +25,9 @@ export default function ProfilePage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [name, setName] = useState(profile?.name || "");
   const [email, setEmail] = useState(profile?.email || "");
-  const [avatar, setAvatar] = useState(
+  const avatar =
     profile?.profileUrl ||
-      "https://cineflow-videofiles.s3.ap-south-1.amazonaws.com/posters/1741603384744-squidgametrailerposter.jpg"
-  );
+    "https://cineflow-videofiles.s3.ap-south-1.amazonaws.com/posters/1741603384744-squidgametrailerposter.jpg";
 
   const handleAvatarChange = () => {};
 

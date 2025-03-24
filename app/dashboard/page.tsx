@@ -4,16 +4,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../../components/Navbar";
 import HeroSection from "../../components/HeroSection";
-// import VideoRow from "../../components/VideoRow";
 import { RootState, AppDispatch } from "../../redux/store";
 import { fetchVideos } from "../../redux/slices/videoSlice";
 import VideoRowNew from "../../components/VideoRowNew";
 import { useAuth } from "../../hooks/userAuth";
-// import { useAuth } from "../../hooks/userAuth";
 
 export default function Dashboard() {
-  // useAuth();
-
   // dispatches an action the redux store
   const dispatch: AppDispatch = useDispatch();
   const {
@@ -25,7 +21,7 @@ export default function Dashboard() {
   //fetch videos when the component mounts
   useEffect(() => {
     dispatch(fetchVideos());
-  }, []);
+  }, [dispatch]);
 
   const authCheck = useAuth();
   if (!authCheck) return null;
@@ -33,7 +29,6 @@ export default function Dashboard() {
     <div className="bg-black text-white min-h-screen">
       <Navbar />
       <HeroSection />
-      {/* <VideoRow title="Trending Now" videos={videos} /> */}
       <VideoRowNew
         title="Trending Now"
         videos={videos}

@@ -1,10 +1,18 @@
 "use client";
+import { Suspense } from "react";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-export default function SuccessPage() {
+function SuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SuccessComponent />
+    </Suspense>
+  );
+}
+function SuccessComponent() {
   //Auto redirect after 3 seconds
 
   const searchParams = useSearchParams();
@@ -49,3 +57,5 @@ export default function SuccessPage() {
     </div>
   );
 }
+
+export default SuccessPage;

@@ -1,3 +1,5 @@
+"use client";
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const NEXT_PUBLIC_API_URL =

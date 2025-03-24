@@ -1,3 +1,5 @@
+"use client";
+
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 // import Error from "next/error";
 //defining typescript interface for video data

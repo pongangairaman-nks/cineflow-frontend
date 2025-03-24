@@ -1,22 +1,28 @@
 "use client"; //Ensures the component runs in the browsers, important for redux and hooks
 
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  useDispatch
+  // useSelector
+} from "react-redux";
 import Navbar from "../../components/Navbar";
 import HeroSection from "../../components/HeroSection";
-import { RootState, AppDispatch } from "../../redux/store";
+import {
+  // RootState,
+  AppDispatch
+} from "../../redux/store";
 import { fetchVideos } from "../../redux/slices/videoSlice";
-import VideoRowNew from "../../components/VideoRowNew";
+// import VideoRowNew from "../../components/VideoRowNew";
 import { useAuth } from "../../hooks/userAuth";
 
 export default function Dashboard() {
   // dispatches an action the redux store
   const dispatch: AppDispatch = useDispatch();
-  const {
-    videos,
-    videoLikesLatest
-    //  status
-  } = useSelector((state: RootState) => state.videos);
+  // const {
+  //   videos,
+  //   videoLikesLatest
+  //   //  status
+  // } = useSelector((state: RootState) => state.videos);
 
   //fetch videos when the component mounts
   useEffect(() => {
@@ -29,12 +35,12 @@ export default function Dashboard() {
     <div className="bg-black text-white min-h-screen">
       <Navbar />
       <HeroSection />
-      <VideoRowNew
+      {/* <VideoRowNew
         title="Trending Now"
         videos={videos}
         videoLikesLatest={videoLikesLatest}
         fetchMoreVideos={fetchVideos}
-      />
+      /> */}
     </div>
   );
 }

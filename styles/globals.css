@@ -31,13 +31,13 @@ body {
   background: var(--background);
   color: var(--textColor);
   font-family: var(--font);
-  -ms-overflow-style: none !important;  /* IE and Edge */
-    /* scrollbar-width: none;    Firefox */
-  overflow-y: scroll;  
+  -ms-overflow-style: none !important; /* IE and Edge */
+  /* scrollbar-width: none;    Firefox */
+  overflow-y: scroll;
 }
 
 body::-webkit-scrollbar {
-  display: none;             /* Chrome, Safari */
+  display: none; /* Chrome, Safari */
 }
 
 /* ✅ Background Image Overlay */
@@ -131,7 +131,7 @@ a {
   transition: background 0.3s ease;
 }
 
-.Scrollednavbar{
+.Scrollednavbar {
   /* background: #120c1f; */
   display: flex;
   justify-content: space-between; /* Space out logo and menu */
@@ -187,7 +187,6 @@ a {
   height: 100vh; /* Full viewport height */
   color: white;
   overflow: hidden;
-  
 }
 
 /* Overlay to darken the background */
@@ -430,14 +429,14 @@ a {
   z-index: 1; /* Ensure text is on top */
 }
 
-.show-image{
+.show-image {
   overflow: hidden;
   position: relative;
   background-size: cover !important;
   /* background-position: center top !important; */
   background-repeat: no-repeat !important; /* Bottom shadow */
 }
-.show-title{
+.show-title {
   /* position: absolute; */
   /* bottom: 155px; */
   color: #ffffff;
@@ -446,22 +445,22 @@ a {
   font-weight: 600;
   line-height: 40px;
 }
-.show-des{
-   color: #ffffff;
-   font-size: 18px;
-   font-family:"Netflix Sans" ;
-   text-align: justify;
-   /* position: relative; */
-   /* bottom: 80px; */
+.show-des {
+  color: #ffffff;
+  font-size: 18px;
+  font-family: "Netflix Sans";
+  text-align: justify;
+  /* position: relative; */
+  /* bottom: 80px; */
 }
 
-.show-content{
+.show-content {
   /* position: absolute; */
   background: black;
   padding: 5px !important;
 }
 
-.show-actions{
+.show-actions {
   background-color: #141414;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -472,14 +471,14 @@ a {
   cursor: pointer;
 }
 
-.close-button{
+.close-button {
   display: flex;
   flex-direction: row;
   justify-content: end;
   align-items: center;
 }
 
-.show-data{
+.show-data {
   background-color: #141414;
   display: flex;
   flex-direction: row;
@@ -489,7 +488,7 @@ a {
   padding: 10px;
 }
 
-.show-info{
+.show-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -497,13 +496,12 @@ a {
   gap: 10px;
 }
 
-.plans{
+.plans {
   margin-top: 20px;
   font-size: 15px;
-  font-family:"Netflix Sans" ;
+  font-family: "Netflix Sans";
   font-weight: 800;
   text-decoration: none;
-
 }
 
 .subscription-card {
@@ -515,14 +513,25 @@ a {
   overflow: hidden;
   text-align: center;
   padding: 20px;
-  background: linear-gradient(149deg, #6C1E41 6.96%, #251743 40.17%, #120c1f 73.39%);
+  background: linear-gradient(
+    149deg,
+    #6c1e41 6.96%,
+    #251743 40.17%,
+    #120c1f 73.39%
+  );
   border: 1px solid grey;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease-in-out;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s ease-in-out;
 }
-.subscription-card:hover{
+.subscription-card:hover {
   transform: scale(1.05);
   cursor: pointer;
-  background: linear-gradient(149deg, #6C1E41 6.96%, #251743 40.17%, #120c1f 73.39%);
+  background: linear-gradient(
+    149deg,
+    #6c1e41 6.96%,
+    #251743 40.17%,
+    #120c1f 73.39%
+  );
 }
 
 .subscription-card h3 {
@@ -545,39 +554,65 @@ a {
 }
 .subscription-card button:hover {
   background: #0056b3;
-
 }
-.my-list{
+.my-list {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.textfield{
+.textfield {
   /* border: 1px solid red !important; */
   /* background: #120c1f no-repeat; */
   padding: 10px !important;
   color: #ffffff;
 }
-.comment-section{
+.comment-section {
   background: #120c1f no-repeat;
-   /* linear-gradient(149deg, #3b3b3b 6.96%, #36454F 40.17%, #36454F 73.39%); */
+  /* linear-gradient(149deg, #3b3b3b 6.96%, #36454F 40.17%, #36454F 73.39%); */
 }
-.comment-title{
+.comment-title {
   color: #ffffff;
-  font-family:"Netflix Sans" ;
+  font-family: "Netflix Sans";
   padding: 3px;
-
 }
 
-.textfield input{
+.textfield input {
   color: #ffffff !important;
 }
-.submit-parent{
+.submit-parent {
   display: flex;
   flex-direction: row;
   justify-content: end;
   align-items: end;
+}
+
+.comment-profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.comment-parent {
+  height: 200px;
+  overflow: auto;
+}
+.comment-merge {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 /* Left Wing with Gradient */
 

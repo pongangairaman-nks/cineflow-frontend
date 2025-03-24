@@ -13,7 +13,8 @@ interface AuthState {
   showDes: string;
   userWatchHistory: any[];
   commentResponse: any;
-  videoComments:any[]
+  videoComments:any[];
+  likeResponse:any;
 }
 
 //Setting up initial state of the auth state values
@@ -28,7 +29,8 @@ const initialState: AuthState = {
   showDes: "",
   userWatchHistory: [],
   commentResponse: {},
-  videoComments:[]
+  videoComments:[],
+  likeResponse:{}
 };
 
 export const fetchVideos = createAsyncThunk("/videos", async () => {
@@ -213,7 +215,7 @@ export const addCommentToVideo: any = createAsyncThunk(
       const data = await response.json();
       //return the array of video objects from the api response
       dispatch(setCommentResponse(data));
-      // return { videoId, data };
+      return  data 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       //handles and returns errors if any
@@ -224,12 +226,12 @@ export const addCommentToVideo: any = createAsyncThunk(
 
 export const getCommentVideo: any = createAsyncThunk(
   "video/getCommentVideo",
-  async (formData: any, { rejectWithValue, dispatch }: any) => {
-    console.log("call>>");
+  async (videoId: any, { rejectWithValue, dispatch }: any) => {
+    console.log("getCommentVideo>>");
     try {
       //making get request to fetch videos from backend
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}video/${formData?.videoId}/getComments`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}video/${videoId}/getComments`,
         {
           method: "GET",
           headers: {
@@ -247,6 +249,39 @@ export const getCommentVideo: any = createAsyncThunk(
       //return the array of video objects from the api response
       dispatch(setVideoComments(data));
       // return { videoId, data };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      //handles and returns errors if any
+      return rejectWithValue(error?.message);
+    }
+  }
+);
+
+export const addLikeToVideo: any = createAsyncThunk(
+  "video/addLike",
+  async (videoId: String, { rejectWithValue, dispatch }: any) => {
+    console.log("call>>");
+    try {
+      //making get request to fetch videos from backend
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}video/${videoId}/like`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          }
+        }
+      );
+      //if response is not ok, throw an error
+      if (!response.ok) {
+        throw new Error("Failed to fetch videos");
+      }
+      //parse the json response
+      const data = await response.json();
+      //return the array of video objects from the api response
+      dispatch(setLikeResponse(data));
+      return  data 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       //handles and returns errors if any
@@ -289,6 +324,9 @@ const movieSlice = createSlice({
     },
     setVideoComments : (state,action)=>{
       state.videoComments  = action.payload
+    },
+    setLikeResponse:(state,action)=>{
+      state.likeResponse = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -319,7 +357,8 @@ export const {
   setLoading,
   setUserWatchHistory,
   setCommentResponse,
-  setVideoComments
+  setVideoComments,
+  setLikeResponse
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

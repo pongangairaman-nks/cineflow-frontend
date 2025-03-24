@@ -7,6 +7,8 @@ import ReactPlayer from "react-player";
 import { AppDispatch } from "../redux/store";
 import {
   addCommentToVideo,
+  addLikeToVideo,
+  getCommentVideo,
   setShowDialog,
   setStoreMovie,
   updateUserWatchHistory,
@@ -25,7 +27,8 @@ import { useRouter } from "next/navigation";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import CommentIcon from "@mui/icons-material/Comment";
 import ClipLoader from "react-spinners/ClipLoader";
-import { TextField, Tooltip } from "@mui/material";
+import { Avatar, TextField, Tooltip } from "@mui/material";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 // ReactModal.setAppElement('#__next');
 const VideoModal = () => {
@@ -41,8 +44,15 @@ const VideoModal = () => {
   const [showCommentBox, setShowCommentBox] = useState<boolean>(false);
   const [inputComment, setInputComment] = useState<string>("");
   // const playerRef = useRef<any>(null);
-  const { selectedMovie, showDialog, clickedCard, showDes, commentResponse } =
-    useSelector((state: any) => state.movie);
+  const {
+    selectedMovie,
+    showDialog,
+    clickedCard,
+    showDes,
+    commentResponse,
+    videoComments,
+    likeResponse,
+  } = useSelector((state: any) => state.movie);
   console.log(inputComment, "inputComment");
   console.log(clickedCard, "clickedCard");
   // const [isModalOpen, setIsModalOpen] = useState(false);
@@ -86,12 +96,20 @@ const VideoModal = () => {
     dispatch(setShowDialog(false));
   };
 
-  const handleComment = () => {
+  const handleComment = async () => {
     const commentData = {
       videoId: clickedCard?._id,
       text: inputComment,
     };
-    dispatch(addCommentToVideo(commentData));
+    const res = await dispatch(addCommentToVideo(commentData));
+    if (res?.payload?.status == 200) {
+      dispatch(getCommentVideo(clickedCard?._id));
+    }
+    console.log(res, "res");
+    setInputComment("");
+  };
+  const handleLike = () => {
+    dispatch(addLikeToVideo(clickedCard?._id));
   };
   return (
     <div>
@@ -151,15 +169,26 @@ const VideoModal = () => {
                       }}
                     />
                   </Tooltip>
-                  <Tooltip title="Like">
-                    <ThumbUpOffAltIcon
-                      sx={{ color: "white", height: "35px", width: "35px" }}
-                    />
-                  </Tooltip>
+                  {likeResponse?.likes == 0 ? (
+                    <Tooltip title="Like">
+                      <ThumbUpOffAltIcon
+                        sx={{ color: "white", height: "35px", width: "35px" }}
+                        onClick={handleLike}
+                      />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Dislike">
+                      <ThumbUpIcon
+                        sx={{ color: "red", height: "35px", width: "35px" }}
+                        onClick={handleLike}
+                      />
+                    </Tooltip>
+                  )}
                   <Tooltip title="Add Comment" sx={{ color: "white" }}>
                     <CommentIcon
                       sx={{ color: "white", height: "35px", width: "35px" }}
                       onClick={() => {
+                        dispatch(getCommentVideo(clickedCard?._id));
                         setShowCommentBox(true);
                       }}
                     />
@@ -210,29 +239,59 @@ const VideoModal = () => {
               </div>
               {showCommentBox ? (
                 <div className="comment-section">
-                  <div className="comment-title">{`Total Comments: ${comments}`}</div>
-                  <TextField
-                    fullWidth
-                    placeholder="Add Comment.."
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "&.Mui-focused fieldset": {
-                          borderColor: "red",
-                          // color:"white"
+                  <div className="comment-title">{`Total Comments: ${videoComments?.result?.length}`}</div>
+                  <div className="comment-merge">
+                    <TextField
+                      fullWidth
+                      placeholder="Add Comment.."
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "&.Mui-focused fieldset": {
+                            borderColor: "red",
+                            // color:"white"
+                          },
                         },
-                      },
-                    }}
-                    className="textfield"
-                    onChange={(event: any) => {
-                      setInputComment(event?.target.value);
-                    }}
-                  />
-                  <div className="submit-parent">
-                    <button className="moreInfoBtn" onClick={handleComment}>
-                      {" "}
-                      Submit
-                    </button>
+                      }}
+                      className="textfield"
+                      onChange={(event: any) => {
+                        setInputComment(event?.target.value);
+                      }}
+                    />
+                    <div className="submit-parent">
+                      <button className="moreInfoBtn" onClick={handleComment}>
+                        {" "}
+                        Submit
+                      </button>
+                    </div>
                   </div>
+                  {videoComments?.result?.length > 0 && (
+                    <div className="comment-parent">
+                      {videoComments?.result &&
+                        videoComments?.result?.map(
+                          (ele: any, index: number) => (
+                            <div className="comment-profile">
+                              <Avatar
+                                alt={ele?.user.name}
+                                src={ele?.user?.avatar}
+                                sx={{ width: 56, height: 56 }}
+                              />
+                              <div className="profile-details">
+                                {" "}
+                                <Typography
+                                  variant="h5"
+                                  sx={{ color: "white" }}
+                                >
+                                  {ele?.user.name}
+                                </Typography>
+                                <Typography sx={{ color: "white" }}>
+                                  {ele?.comment}
+                                </Typography>
+                              </div>
+                            </div>
+                          )
+                        )}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <></>

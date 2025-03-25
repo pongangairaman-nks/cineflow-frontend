@@ -35,17 +35,34 @@ export default function ProfilePage() {
   const [selectedFile, setSelectedFile] = useState<any>();
   const [mywatchList, setMywatchList] = useState<any>([]);
 
-  const handleAvatarChange = (event: any) => {
-    // const selectedImage = event.target.files[0]
-    setSelectedFile(event.target.files[0]);
-    const formData: any = new FormData();
-    formData.append("avatar", selectedFile);
-    // console.log(formData, "formData");
+  const handleAvatarChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!event.target.files?.[0]) return;
+    const file = event.target.files[0];
 
-    dispatch(updateAvatar(formData));
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}user/updateAvatar`,
+      {
+        method: "POST",
+        headers: {
+          // "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      }
+    );
+
+    const data = await response.json();
+    if (data.profileAvatar) {
+      setAvatar(data.profileAvatar);
+    }
   };
 
-  // console.log(profile, "profile");
+  console.log(avatar, "avatar");
 
   useEffect(() => {
     dispatch(fetchUserProfile("arg"));
@@ -136,39 +153,39 @@ export default function ProfilePage() {
       {/* ✅ Settings Panel */}
       <Container sx={{ flex: 1, py: 6 }}>
         <Typography variant="h4">Profile</Typography>
-       
+
         {mywatchList && (
           <>
             <Typography variant="body2" color="grey.500">
-           My List
-         </Typography>
-          <Paper sx={{ bgcolor: "grey.900", p: 4, mt: 4, borderRadius: 2 }}>
-            <div className="my-list">
-              {mywatchList &&
-                mywatchList?.map((ele: any, index: number) => (
-                  <>
-                    <div className="card">
-                      <div className="card-image-container">
-                        <Image
-                          src={ele?.poster}
-                          alt={ele?.title}
-                          //   layout="fill"
-                          width={300}
-                          height={300}
-                          objectFit="cover"
-                          unoptimized
-                        />
-                        <h3 className="card-title">{ele?.title}</h3>
-                      </div>
-                      {/* <div className="card-content">
+              My List
+            </Typography>
+            <Paper sx={{ bgcolor: "grey.900", p: 4, mt: 4, borderRadius: 2 }}>
+              <div className="my-list">
+                {mywatchList &&
+                  mywatchList?.map((ele: any, index: number) => (
+                    <>
+                      <div className="card">
+                        <div className="card-image-container">
+                          <Image
+                            src={ele?.poster}
+                            alt={ele?.title}
+                            //   layout="fill"
+                            width={300}
+                            height={300}
+                            objectFit="cover"
+                            unoptimized
+                          />
+                          <h3 className="card-title">{ele?.title}</h3>
+                        </div>
+                        {/* <div className="card-content">
                        <p className="card-description">{description}</p>
                      </div> */}
-                    </div>
-                  </>
-                ))}
-            </div>
-          </Paper></>
-         
+                      </div>
+                    </>
+                  ))}
+              </div>
+            </Paper>
+          </>
         )}
         <Paper sx={{ bgcolor: "grey.900", p: 4, mt: 4, borderRadius: 2 }}>
           <Typography variant="h6" sx={{ color: "white" }}>
@@ -177,12 +194,7 @@ export default function ProfilePage() {
 
           {/* ✅ Avatar Upload */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2, mt: 2 }}>
-            <Avatar
-              sx={{ width: 64, height: 64 }}
-              src={
-                "https://cineflow-videofiles.s3.ap-south-1.amazonaws.com/posters/1741603384744-squidgametrailerposter.jpg"
-              }
-            />
+            <Avatar sx={{ width: 64, height: 64 }} src={avatar} />
             <Button
               component="label"
               variant="outlined"
@@ -219,6 +231,9 @@ export default function ProfilePage() {
           {/* ✅ Email Selection */}
           <Box mt={3}>
             <TextField
+              InputProps={{
+                readOnly: true,
+              }}
               label="email"
               variant="filled"
               fullWidth

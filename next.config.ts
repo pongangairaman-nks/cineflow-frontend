@@ -7,8 +7,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cineflow-videofiles.s3.ap-south-1.amazonaws.com"
+        hostname: "**" // Allows all HTTPS hosts
       }
+      // {
+      //   protocol: "https",
+      //   hostname: "cineflow-videofiles.s3.ap-south-1.amazonaws.com"
+      // },
     ]
   },
   devIndicators: false

@@ -3,7 +3,7 @@
 // app/dashboard/page.tsx
 import React from "react";
 import { Info, Play } from "lucide-react";
-import ScrollableSection from "../../components/ScrollableSection";
+import ScrollableSection from "../../../components/ScrollableSection";
 import Image from "next/image";
 
 const recommendedShows = [

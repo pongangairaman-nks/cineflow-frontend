@@ -15,13 +15,13 @@ function SideBar() {
   const [activeItem, setActiveItem] = useState("Home");
   const router = useRouter();
   const menuItems = [
-    { icon: Home, label: "Home", path: "/dashboard" },
-    { icon: Film, label: "Movies", path: "/movies" },
-    { icon: Tv, label: "TV Shows", path: "/tv-shows" },
-    { icon: Bookmark, label: "Wishlist", path: "/wishlist" },
-    { icon: History, label: "Watch History", path: "/watch-history" },
-    { icon: User, label: "Profile", path: "/profile" },
-    { icon: Wallet, label: "Subscription", path: "/subscription" }
+    { icon: Home, label: "Home", path: "/dashboard/home" },
+    { icon: Film, label: "Movies", path: "/dashboard/movies" },
+    { icon: Tv, label: "TV Shows", path: "/dashboard/tv-shows" },
+    { icon: Bookmark, label: "Wishlist", path: "/dashboard/wishlist" },
+    { icon: History, label: "Watch History", path: "/dashboard/watch-history" },
+    { icon: User, label: "Profile", path: "/dashboard/profile" },
+    { icon: Wallet, label: "Subscription", path: "/dashboard/subscription" }
   ];
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 // import { Menu, X, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -14,7 +14,7 @@ import {
   Paper
 } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
-import { fetchUserProfile } from "../../redux/slices/userSlice";
+import { fetchUserProfile } from "../../../redux/slices/userSlice";
 
 export default function ProfilePage() {
   const dispatch = useDispatch<AppDispatch>();

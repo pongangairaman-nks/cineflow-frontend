@@ -22,7 +22,7 @@ function SuccessComponent() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/dashboard");
+      router.push("/dashboard/home");
     }, 3000);
     return () => clearTimeout(timer);
   }, [router]);
@@ -50,7 +50,7 @@ function SuccessComponent() {
       </motion.h2>
       <Button
         className="mt-6 bg-[var(--foreground)] text-white px-6 py-3 font-semibold rounded"
-        onClick={() => router.push("/dashboard")}
+        onClick={() => router.push("/dashboard/home")}
       >
         Go to Dashboard
       </Button>

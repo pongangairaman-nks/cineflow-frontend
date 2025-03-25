@@ -3,6 +3,21 @@ import { act } from "react";
 // import axi
 
 //Defining interface of the Auth State
+export interface Comment {
+  _id?: string;
+  user: {
+    name: string;
+    avatar?: string;
+  };
+  comment: string;
+  createdAt?: Date;
+}
+
+export interface VideoCommentsResponse {
+  result: Comment[];
+  total?: number;
+}
+
 interface AuthState {
   loading: boolean;
   allVideos: any[];
@@ -14,7 +29,7 @@ interface AuthState {
   showDes: string;
   userWatchHistory: any[];
   commentResponse: any;
-  videoComments: any[];
+  videoComments: VideoCommentsResponse | null;
   likeResponse: any;
   aiRecommendationList: any[];
 }
@@ -31,7 +46,7 @@ const initialState: AuthState = {
   showDes: "",
   userWatchHistory: [],
   commentResponse: {},
-  videoComments: [],
+  videoComments: null,
   likeResponse: {},
   aiRecommendationList: [],
 };
@@ -358,7 +373,10 @@ const movieSlice = createSlice({
     setCommentResponse: (state, action) => {
       state.commentResponse = action.payload;
     },
-    setVideoComments: (state, action) => {
+    // setVideoComments: (state, action) => {
+    //   state.videoComments = action.payload;
+    // },
+    setVideoComments: (state, action: PayloadAction<VideoCommentsResponse>) => {
       state.videoComments = action.payload;
     },
     setLikeResponse: (state, action) => {

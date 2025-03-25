@@ -22,7 +22,11 @@ import { fetchUserProfile } from "../../redux/slices/userSlice";
 import { AppDispatch } from "../../redux/store";
 import { logout } from "../../redux/slices/authSlice";
 import { useRouter } from "next/navigation";
-
+interface WatchListItem {
+  poster: string;
+  title: string;
+  // Add other properties as needed
+}
 export default function ProfilePage() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
@@ -32,7 +36,7 @@ export default function ProfilePage() {
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
   // const [selectedFile, setSelectedFile] = useState<any>();
-  const [mywatchList, setMywatchList] = useState<any[]>([]);
+  const [mywatchList, setMywatchList] = useState<WatchListItem[]>([]);
 
   const handleAvatarChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -64,7 +68,7 @@ export default function ProfilePage() {
   console.log(avatar, "avatar");
 
   useEffect(() => {
-    dispatch<any>(fetchUserProfile("arg"));
+    dispatch(fetchUserProfile("arg"));
     const watcherLater = JSON.parse(localStorage.getItem("myLists") ?? "[]");
     // console.log(watcherLater, "later");
     setMywatchList(watcherLater);
@@ -161,7 +165,7 @@ export default function ProfilePage() {
             <Paper sx={{ bgcolor: "grey.900", p: 4, mt: 4, borderRadius: 2 }}>
               <div className="my-list">
                 {mywatchList &&
-                  mywatchList?.map((ele: any, index: number) => (
+                  mywatchList?.map((ele, index) => (
                     <>
                       <div className="card" key={index}>
                         <div className="card-image-container">

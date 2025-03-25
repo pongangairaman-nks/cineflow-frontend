@@ -13,7 +13,30 @@ import {
 } from "../../redux/slices/movieSlice";
 import Head from "next/head";
 
+export interface Allvideo {
+
+  aiDescription : string
+  genre:string;
+ poster:string
+  title:string;
+  type:string
+  url:string
+  _id:string;
+}
+
+export interface HeroData {
+  videoUrl: string;
+  urlName: string;
+  title: string;
+  type: string;
+  genre: string;
+  image: string;
+  description: string;
+
+}
+
 export default function Dashboard() {
+
   //dispatches an action the redux store
   const dispatch: AppDispatch = useDispatch();
   const { allVideos, userWatchHistory, aiRecommendationList } = useSelector(
@@ -27,7 +50,7 @@ export default function Dashboard() {
     dispatch(getAiRecommendationList());
   }, []);
 
-  const featuredMovie = {
+  const featuredMovie :HeroData = {
     urlName: "Avatar",
     title: "Avatar: The Way of Water",
     type: "movie",

@@ -1,12 +1,12 @@
 "use client";
-import { useEffect } from "react";
+
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-export default function SuccessPage() {
-  //Auto redirect after 3 seconds
-
+// Separate component to handle search params
+function SuccessContent() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
   console.log("message", type);
@@ -34,9 +34,7 @@ export default function SuccessPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        {type === "login"
-          ? "Bravo! 🎉 You've just unlocked another cinematic adventure! Keep exploring, keep watching, and let the magic of movies continue! 🍿✨"
-          : type === "signup"
+        {type === "login" || type === "signup"
           ? "Bravo! 🎉 You've just unlocked another cinematic adventure! Keep exploring, keep watching, and let the magic of movies continue! 🍿✨"
           : "Success"}
       </motion.h2>
@@ -47,5 +45,14 @@ export default function SuccessPage() {
         Go to Dashboard
       </Button>
     </div>
+  );
+}
+
+// Page component with Suspense boundary
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-black text-white">Loading...</div>}>
+      <SuccessContent />
+    </Suspense>
   );
 }

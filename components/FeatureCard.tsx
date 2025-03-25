@@ -1,10 +1,22 @@
 "use client";
 
 import React from "react";
+import { CSSProperties } from 'react';
 import LiveTvIcon from "@mui/icons-material/LiveTv";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import PeopleIcon from "@mui/icons-material/People";
-const plans: any = [
+export interface Plan{
+  title:string;
+  des:string;
+  logo:React.ReactElement<SVGSVGElement>
+}
+
+interface PropPlan {
+  logo: React.ReactElement<SVGSVGElement>;
+  title: string;
+  des: string;
+}
+const plans: Plan[] = [
   {
     title: "Watch in your TV",
     des: "Watch on smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players and more.",
@@ -22,7 +34,7 @@ const plans: any = [
   },
 ];
 
-const cardStyle:any = {
+const cardStyle : CSSProperties = {
   width: "300px",
   height: "300px",
   background:
@@ -49,16 +61,16 @@ const cardStyle:any = {
 //   transition: "background 0.3s ease-in-out",
 // };
 
-const FeatureCard = ({ plan }: any) => {
+const FeatureCard = ({ logo, title ,des}: PropPlan) => {
   return (
     <div
       style={cardStyle}
       onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
       onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
     >
-      <div>{plan.logo}</div>
+      <div>{logo}</div>
       <h3 style={{ margin: "25px 0", fontSize: "1.8rem", color: "white",lineHeight:"35px" }}>
-        {plan?.title}
+        {title}
       </h3>
       <p
         style={{
@@ -68,7 +80,7 @@ const FeatureCard = ({ plan }: any) => {
           textAlign: "center",
         }}
       >
-        {plan.des}
+        {des}
       </p>
     </div>
   );
@@ -100,9 +112,9 @@ const Feature = () => {
           maxWidth: "1000px",
         }}
       >
-        {plans.map((plan: any, index: number) => (
-          <FeatureCard key={index} plan={plan} />
-        ))}
+        {plans.map((plan, index) => (
+           <FeatureCard key={index} logo={plan.logo} title={plan.title}des={plan.des} />
+))}
       </div>
     </div>
   );

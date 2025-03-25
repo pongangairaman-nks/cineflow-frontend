@@ -1,12 +1,20 @@
 "use client";
 
 import React from "react";
+import { CSSProperties } from 'react';
 import { loadStripe } from "@stripe/stripe-js";
-const stripePromise:any = process.env.NEXT_PUBLIC_PUBLISHABLE_KEY
+const stripePromise = process.env.NEXT_PUBLIC_PUBLISHABLE_KEY
 ? loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY)
 : Promise.reject(new Error("Stripe publishable key is missing"));
-
-const plans: any = [
+export interface Plan{
+  id:number;
+  planName:string;
+  resolution:string;
+  nunmerOfDevices:string;
+  features:string[];
+  price:number
+}
+const plans :Plan[]= [
   {
     id: 1,
     planName: "Mobile",
@@ -34,7 +42,7 @@ const plans: any = [
   },
 ];
 
-const cardStyle :any= {
+const cardStyle:CSSProperties = {
   width: "300px",
   height: "300px",
   background:
@@ -61,7 +69,7 @@ const buttonStyle = {
   transition: "background 0.3s ease-in-out",
 };
 
-const SubscriptionCard = ({ plan }: any) => {
+const SubscriptionCard = ({ plan }: { plan: Plan }) => {
   const handleCheckout = async (name:string, price:number) => {
     const res = await fetch("/api/checkout-session", {
       method: "POST",
@@ -136,7 +144,7 @@ const SubscriptionCards = () => {
           maxWidth: "1000px",
         }}
       >
-        {plans.map((plan: any, index: number) => (
+        {plans.map((plan, index: number) => (
           <SubscriptionCard key={index} plan={plan} />
         ))}
       </div>

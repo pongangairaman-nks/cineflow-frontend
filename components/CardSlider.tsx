@@ -4,11 +4,19 @@ import Slider from "react-slick";
 import Card from "./Card";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/store"; // Import types
 import VideoModal from "./videoModal";
+export interface Video {
+  poster: string;
+  title: string;
+  url: string;
+  aiDescription: string;
+  _id: string;
+}
+interface CardSliderProps {
+  allVideos: Video[];
+}
 
-function CardSlider({ allVideos }: any) {
+function CardSlider({ allVideos }: CardSliderProps) {
   // const dispatch = useDispatch<AppDispatch>();
   //   const {movies} = useSelector((state:any)=>state?.movie)
   console.log(allVideos, "movies");
@@ -29,7 +37,7 @@ function CardSlider({ allVideos }: any) {
     <VideoModal/>
       <div className="slider-container">
         <Slider {...settings}>
-          {allVideos?.map((ele: any, index: number) => (
+          {allVideos?.map((ele: Video, index: number) => (
             <Card
               imageUrl={ele?.poster}
               title={ele?.title}

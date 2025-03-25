@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise:any = loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY);
 
 const plans: any = [
   {
@@ -9,7 +11,7 @@ const plans: any = [
     nunmerOfDevices: "1",
     resolution: "480p",
     features: ["Good Video Quality", "For phones and Tablet"],
-    price: "149/mo",
+    price: 149,
   },
   // { id: 2, planName: "Basic", resolution: "720p", features: [""], price: "199/mo" },
   {
@@ -18,7 +20,7 @@ const plans: any = [
     resolution: "1080p",
     nunmerOfDevices: "2",
     features: [""],
-    price: "499/mo",
+    price: 499,
   },
   {
     id: 4,
@@ -26,7 +28,7 @@ const plans: any = [
     resolution: "4K + HDR",
     nunmerOfDevices: "4",
     features: [""],
-    price: "649/mo",
+    price: 649,
   },
 ];
 
@@ -58,6 +60,24 @@ const buttonStyle = {
 };
 
 const SubscriptionCard = ({ plan }: any) => {
+  const handleCheckout = async (name:string, price:number) => {
+    const res = await fetch("/api/checkout-session", {
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        price: price,
+        origin: window.location.origin
+      })
+    });
+
+    const { id } = await res.json();
+
+    const stripe = await stripePromise;
+
+    stripe?.redirectToCheckout({
+      sessionId: id
+    });
+  };
   return (
     <div
       style={cardStyle}
@@ -77,6 +97,7 @@ const SubscriptionCard = ({ plan }: any) => {
        No of Devices Supports {plan.nunmerOfDevices}
       </p>
       <button
+       onClick={() => {handleCheckout(plan.planName, plan.price)}}
         style={buttonStyle}
         onMouseEnter={(e) => (e.currentTarget.style.background = "#b20710")}
         onMouseLeave={(e) => (e.currentTarget.style.background = "#e50914")}

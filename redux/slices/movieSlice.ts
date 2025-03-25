@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { act } from "react";
 // import axi
 
 //Defining interface of the Auth State
@@ -13,8 +14,9 @@ interface AuthState {
   showDes: string;
   userWatchHistory: any[];
   commentResponse: any;
-  videoComments:any[];
-  likeResponse:any;
+  videoComments: any[];
+  likeResponse: any;
+  aiRecommendationList: any[];
 }
 
 //Setting up initial state of the auth state values
@@ -29,8 +31,9 @@ const initialState: AuthState = {
   showDes: "",
   userWatchHistory: [],
   commentResponse: {},
-  videoComments:[],
-  likeResponse:{}
+  videoComments: [],
+  likeResponse: {},
+  aiRecommendationList: [],
 };
 
 export const fetchVideos = createAsyncThunk("/videos", async () => {
@@ -215,7 +218,7 @@ export const addCommentToVideo: any = createAsyncThunk(
       const data = await response.json();
       //return the array of video objects from the api response
       dispatch(setCommentResponse(data));
-      return  data 
+      return data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       //handles and returns errors if any
@@ -237,7 +240,7 @@ export const getCommentVideo: any = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-          }
+          },
         }
       );
       //if response is not ok, throw an error
@@ -270,7 +273,7 @@ export const addLikeToVideo: any = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-          }
+          },
         }
       );
       //if response is not ok, throw an error
@@ -281,7 +284,40 @@ export const addLikeToVideo: any = createAsyncThunk(
       const data = await response.json();
       //return the array of video objects from the api response
       dispatch(setLikeResponse(data));
-      return  data 
+      return data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      //handles and returns errors if any
+      return rejectWithValue(error?.message);
+    }
+  }
+);
+
+export const getAiRecommendationList: any = createAsyncThunk(
+  "video/getAiRecommendationList",
+  async (videoId: String, { rejectWithValue, dispatch }: any) => {
+    console.log("call>>");
+    try {
+      //making get request to fetch videos from backend
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}ai/airecommended-movies`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      //if response is not ok, throw an error
+      if (!response.ok) {
+        throw new Error("Failed to fetch videos");
+      }
+      //parse the json response
+      const data = await response.json();
+      //return the array of video objects from the api response
+      dispatch(setAiRecommendationList(data?.videos));
+      return data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       //handles and returns errors if any
@@ -322,12 +358,15 @@ const movieSlice = createSlice({
     setCommentResponse: (state, action) => {
       state.commentResponse = action.payload;
     },
-    setVideoComments : (state,action)=>{
-      state.videoComments  = action.payload
+    setVideoComments: (state, action) => {
+      state.videoComments = action.payload;
     },
-    setLikeResponse:(state,action)=>{
-      state.likeResponse = action.payload
-    }
+    setLikeResponse: (state, action) => {
+      state.likeResponse = action.payload;
+    },
+    setAiRecommendationList: (state, action) => {
+      state.aiRecommendationList = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -358,7 +397,8 @@ export const {
   setUserWatchHistory,
   setCommentResponse,
   setVideoComments,
-  setLikeResponse
+  setLikeResponse,
+  setAiRecommendationList,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

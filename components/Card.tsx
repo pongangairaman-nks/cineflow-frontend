@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import{setShowDialog, setClickedcard, fetchVideoDescription} from "../redux/slices/movieSlice"
+import { Video } from "./CardSlider";
 
 interface CardProps {
-  imageUrl: any;
-  title: any;
-  videoUrl: any;
-  ele:any
+  imageUrl: string;
+  title: string;
+  videoUrl: string;
+  ele:Video
 }
 
 const Card: React.FC<CardProps> = ({ imageUrl, title, videoUrl,ele }) => {
   const dispatch = useDispatch()
   // const [showDialog, setShowDIalog] = useState<boolean>(false);
 
-  const hanldeVideo = async (video: string, image: string,ele:any) => {
-    let res
+  const hanldeVideo = async (video: string, image: string,ele:Video) => {
+    console.log("clicked")
+    let res={}
     if(!ele?.aiDescription){
      res = await dispatch(fetchVideoDescription(ele?._id))
     }

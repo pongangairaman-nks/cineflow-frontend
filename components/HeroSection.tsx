@@ -10,9 +10,13 @@ import {
   setStoreMovie,
 } from "../redux/slices/movieSlice";
 import { useRouter } from "next/navigation";
+import { HeroData } from "../app/dashboard/page";
+interface HeroSectionProps {
+  data: HeroData;
+}
 
-const HeroSection = ({ data }: { data: any }) => {
-  console.log(data, "data");
+const HeroSection = ({ data }:HeroSectionProps) => {
+  // console.log(data, "data");
   const router = useRouter();
   const dispatch = useDispatch();
   const handleVideo = () => {

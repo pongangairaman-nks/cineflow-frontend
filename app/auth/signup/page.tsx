@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { AppDispatch } from "../../../redux/store";
 
 
 interface SignUpForm {
@@ -16,7 +17,7 @@ interface SignUpForm {
 }
 
 export default function Home() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
@@ -58,7 +59,7 @@ export default function Home() {
   const handleSignup = async (data: SignUpForm) => {
     setError(null)
     console.log(data, "register");
-    const res: any = await dispatch<any>(
+    const res = await dispatch(
       userRegister({
         name: data.name,
         email: data.email,

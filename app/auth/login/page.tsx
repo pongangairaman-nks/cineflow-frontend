@@ -52,7 +52,7 @@ export default function Home() {
   const handleLogin = async (data:LoginForm)=>{
     setError(null)
     console.log(data,"data")
-   const res = await  dispatch(userLogin({ email: data.email, password: data.password }))as unknown as YourExpectedResponseType
+   const res = await  dispatch(userLogin({ email: data.email, password: data.password }))
   //  console.log(res)
    if(res?.payload?.status == 200){
     router.push("/dashboard")

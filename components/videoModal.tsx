@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, CSSProperties, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactModal from "react-modal";
 import { AppDispatch } from "../redux/store";
@@ -26,6 +26,12 @@ import { Avatar, TextField, Tooltip } from "@mui/material";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { RootState } from '../redux/store';
 // ReactModal.setAppElement('#__next');
+
+interface ClickCard {
+  _id: string;
+}
+
+
 const VideoModal = () => {
   // const comments = 3;
   // const override: CSSProperties = {
@@ -35,7 +41,7 @@ const VideoModal = () => {
   // };
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const [items, setItems] = useState<string[][]>([]);
+  const [items, setItems] = useState<ClickCard[]>([]);
   const [showCommentBox, setShowCommentBox] = useState<boolean>(false);
   const [inputComment, setInputComment] = useState<string>("");
   // const playerRef = useRef<any>(null);
@@ -46,6 +52,8 @@ const VideoModal = () => {
     videoComments,
     likeResponse,
   } = useSelector((state:RootState) => state.movie);
+  
+  
   console.log(inputComment, "inputComment");
   console.log(clickedCard, "clickedCard");
   // const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,7 +70,7 @@ const VideoModal = () => {
     }
   }, []);
 
-  const handleModal = (event: any) => {
+  const handleModal = () => {
     // event.stopPropagation()
     dispatch(updateUserWatchHistory(clickedCard?._id));
     // console.log("click");
@@ -77,8 +85,8 @@ const VideoModal = () => {
     //   playerRef.current.stop(); // Stop the video
     // }
   };
-  const handleWatchList = (clickedCard: any) => {
-    const isExist = items?.some((ele: any) => ele?._id == clickedCard?._id);
+  const handleWatchList = (clickedCard:ClickCard) => {
+    const isExist = items?.some((ele) => ele?._id == clickedCard?._id);
     if (!isExist) {
       const newArr = [...items, clickedCard];
       const updatedItems = newArr;
@@ -246,7 +254,7 @@ const VideoModal = () => {
                         },
                       }}
                       className="textfield"
-                      onChange={(event: any) => {
+                      onChange={(event) => {
                         setInputComment(event?.target.value);
                       }}
                     />
@@ -257,11 +265,11 @@ const VideoModal = () => {
                       </button>
                     </div>
                   </div>
-                  {videoComments?.result?.length > 0 && (
+                  {videoComments && videoComments.result && videoComments.result.length > 0 && (
                     <div className="comment-parent">
                       {videoComments?.result &&
                         videoComments?.result?.map(
-                          (ele: any, index: number) => (
+                          (ele, index: number) => (
                             <div className="comment-profile" key={index}>
                               <Avatar
                                 alt={ele?.user.name}

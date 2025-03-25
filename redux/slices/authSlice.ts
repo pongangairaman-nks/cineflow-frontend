@@ -19,9 +19,9 @@ const initialState: AuthState = {
 
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async (formData: any, { dispatch }: any) => {
+  async (formData: { email: string; password: string }, thunkAPI) => {
     try {
-      const response: any = await fetch(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}auth/login`,
         {
           method: "POST",
@@ -35,7 +35,7 @@ export const userLogin = createAsyncThunk(
         }
       );
       const registerLogin = await response.json();
-      dispatch(login(registerLogin));
+      thunkAPI.dispatch(login(registerLogin));
       console.log(registerLogin, "response");
       // const data = await response.json()
       // console.log(data,"data")
@@ -48,9 +48,9 @@ export const userLogin = createAsyncThunk(
 
 export const userRegister = createAsyncThunk(
   "auth/register",
-  async (formData: any, { dispatch }: any) => {
+  async (formData: { name: string; email: string; password: string },thunkAPI) => {
     try {
-      const response: any = await await fetch(
+      const response = await await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}auth/register`,
         {
           method: "POST",
@@ -65,7 +65,7 @@ export const userRegister = createAsyncThunk(
         }
       );
       const registerUser = await response.json();
-      dispatch(logout(registerUser));
+      thunkAPI.dispatch(logout(registerUser));
       console.log(userLogin, "response");
       // const data = await response.json()
       // console.log(data,"data")
@@ -82,7 +82,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     //login  reducer that takes the previous state and updates the state in the reducer
-    login: (state, action: PayloadAction<{user:any, email: string; token: string }>) => {
+    login: (state, action: PayloadAction<{user: { email: string }, email: string; token: string }>) => {
       state.user = {
         email: action.payload.user.email,
       };

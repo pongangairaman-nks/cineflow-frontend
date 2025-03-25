@@ -11,11 +11,15 @@ import {
   LogOut,
   Bell,
   Layers,
-  Bookmark
+  Bookmark,
+  Info
 } from "lucide-react";
 import { Search, Mic, User } from "lucide-react";
 import SearchInput from "../../components/SearchComponent";
 import ScrollableSection from "../../components/ScrollableSection";
+import Image from "next/image";
+import { Play } from "lucide-react";
+
 const recommendedShows = [
   {
     title: "Money Heist Season 5",
@@ -153,7 +157,59 @@ export default function DashboardPage() {
             </div>
           </nav>
         </div>
-        <div>
+        {/* Hero Background */}
+        <div className="h-[70vh] mx-[24px] bg-red-500 relative">
+          <Image
+            src="https://cineflow-videofiles.s3.ap-south-1.amazonaws.com/posters/1741603384744-squidgametrailerposter.jpg"
+            alt="Featured"
+            fill
+            className="object-cover rounded-[8px] shadow-md"
+            priority={false}
+          />
+          <div className="absolute left-[80px] bottom-[100px] text-white space-y-6 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+            {/* Title */}
+            <h1 style={{ fontSize: "32px", fontWeight: "bold" }}>
+              Lost In Space 2
+            </h1>
+
+            {/* Subtitle */}
+            <p style={{ fontSize: 18 }}>A Netflix Original Series</p>
+
+            {/* Buttons */}
+            <div style={{ marginTop: "24px", display: "flex", gap: 16 }}>
+              {/* Play Button */}
+              <button
+                style={{
+                  backgroundColor: "white",
+                  width: "160px",
+                  display: "flex",
+                  alignItems: "center",
+                  height: "48px",
+                  borderRadius: "4px"
+                }}
+              >
+                <Play color="black" />
+                <span style={{ color: "black", marginLeft: "8px" }}>Play</span>
+              </button>
+
+              {/* More Info Button */}
+              <button
+                style={{
+                  backgroundColor: "gray",
+                  width: "180px",
+                  display: "flex",
+                  alignItems: "center",
+                  height: "48px",
+                  borderRadius: "4px"
+                }}
+              >
+                <Info className="w-5 h-5 stroke-white" />
+                <span style={{ marginLeft: "8px" }}>More Info</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="mt-[40px]">
           <ScrollableSection
             title={"Recommended for you"}
             data={recommendedShows}

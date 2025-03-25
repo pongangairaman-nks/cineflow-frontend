@@ -7,12 +7,15 @@ import { useRouter } from "next/navigation";
 import DotLoader from "react-spinners/DotLoader";
 import useAuth from "@/hooks/useAuth";
 import Navbar from "../components/Navbar";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isAuthRoute = pathname.startsWith("/auth");
   const override: CSSProperties = {
     display: "block",
     margin: "auto",
@@ -49,10 +52,8 @@ export default function RootLayout({
     <>
       <html lang="en">
         <body>
-          <Navbar />
-          <Provider store={store}>
-            {children}
-          </Provider>
+          {!isAuthRoute && <Navbar />}
+          <Provider store={store}>{children}</Provider>
         </body>
       </html>
     </>

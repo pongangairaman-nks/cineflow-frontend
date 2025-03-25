@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { AppDispatch } from "../../../redux/store";
 
 interface LoginForm {
   email: string;
@@ -14,7 +15,7 @@ interface LoginForm {
 }
 
 export default function Home() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 

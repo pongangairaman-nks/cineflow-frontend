@@ -66,7 +66,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     dispatch(fetchUserProfile("arg"));
-    const watcherLater = JSON.parse(localStorage.getItem("myLists"));
+    const watcherLater = JSON.parse(localStorage.getItem("myLists") ?? "[]");
     // console.log(watcherLater, "later");
     setMywatchList(watcherLater);
   }, []);

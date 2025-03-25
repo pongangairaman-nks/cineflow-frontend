@@ -24,7 +24,7 @@ const Movies = () => {
   return (
      <>
       <div className="bg-black text-white min-h-screen">
-      <Navbar />
+      {/* <Navbar /> */}
       <HeroSection data={featuredMovie}/>
       <div className="trending-head">Trending Now</div>
       <CardSlider allVideos={movies}/>

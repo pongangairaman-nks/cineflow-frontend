@@ -7,12 +7,17 @@ import HeroSection from "../../components/HeroSection";
 import CardSlider from "../../components/CardSlider";
 // import MovieRow from "../../components/MovieRow";
 import { RootState, AppDispatch } from "../../redux/store";
-import { fetchVideos, getAiRecommendationList, getWatchHistory } from "../../redux/slices/movieSlice";
+import {
+  fetchVideos,
+  getAiRecommendationList,
+  getWatchHistory,
+} from "../../redux/slices/movieSlice";
+import Head from "next/head";
 
 export default function Dashboard() {
   //dispatches an action the redux store
   const dispatch: AppDispatch = useDispatch();
-  const { allVideos, userWatchHistory,aiRecommendationList } = useSelector(
+  const { allVideos, userWatchHistory, aiRecommendationList } = useSelector(
     (state: RootState) => state.movie
   );
   // console.log(allVideos, "videos");
@@ -20,7 +25,7 @@ export default function Dashboard() {
   useEffect(() => {
     dispatch(fetchVideos());
     dispatch(getWatchHistory());
-    dispatch(getAiRecommendationList())
+    dispatch(getAiRecommendationList());
   }, []);
 
   const featuredMovie = {
@@ -46,36 +51,41 @@ export default function Dashboard() {
   console.log(aiRecommendationList, "aiRecommendationList");
 
   return (
-    <div className="bg-black text-white min-h-screen">
-      <Navbar />
-      <HeroSection data={featuredMovie} />
-      <div className="trending-head">Trending Now</div>
-      <CardSlider allVideos={allVideos} />
-      {userWatchHistory?.length > 3 && (
-        <>
-          <div className="trending-head">continue watching...</div>
-          <CardSlider allVideos={userWatchHistory} />
-        </>
-      )}
-      {aiRecommendationList && aiRecommendationList?.length> 0 &&
-        <>
-        <div className="trending-head">Ai Recommendation List </div>
-        <CardSlider allVideos={aiRecommendationList} />
-      </>
-      }
-      {allMovies && (
-        <>
-          <div className="trending-head">Binge Worty movies</div>
-          <CardSlider allVideos={allMovies} />
-        </>
-      )}
+    <>
+      <Head>
+        <title>My Custom Page Title</title>
+      </Head>
+      <div className="bg-black text-white min-h-screen">
+        {/* <Navbar /> */}
+        <HeroSection data={featuredMovie} />
+        <div className="trending-head">Trending Now</div>
+        <CardSlider allVideos={allVideos} />
+        {userWatchHistory?.length > 3 && (
+          <>
+            <div className="trending-head">continue watching...</div>
+            <CardSlider allVideos={userWatchHistory} />
+          </>
+        )}
+        {aiRecommendationList && aiRecommendationList?.length > 0 && (
+          <>
+            <div className="trending-head">Ai Recommendation List </div>
+            <CardSlider allVideos={aiRecommendationList} />
+          </>
+        )}
+        {allMovies && (
+          <>
+            <div className="trending-head">Binge Worty movies</div>
+            <CardSlider allVideos={allMovies} />
+          </>
+        )}
 
-      {allTvShows && (
-        <>
-          <div className="trending-head">Critically Acclaimed Tv Shows </div>
-          <CardSlider allVideos={allTvShows} />
-        </>
-      )}
-    </div>
+        {allTvShows && (
+          <>
+            <div className="trending-head">Critically Acclaimed Tv Shows </div>
+            <CardSlider allVideos={allTvShows} />
+          </>
+        )}
+      </div>
+    </>
   );
 }

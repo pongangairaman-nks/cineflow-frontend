@@ -2,7 +2,9 @@
 
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
-const stripePromise:any = loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY);
+const stripePromise:any = process.env.NEXT_PUBLIC_PUBLISHABLE_KEY
+? loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY)
+: Promise.reject(new Error("Stripe publishable key is missing"));
 
 const plans: any = [
   {
@@ -88,7 +90,7 @@ const SubscriptionCard = ({ plan }: any) => {
         {plan.planName}
       </h3>
       <p style={{ color: "#d1d1d1", fontSize: "1rem", margin: "5px 0" }}>
-        &#x20B9; {plan.price}
+        &#x20B9; {`${plan.price} /month`}
       </p>
       <p style={{ color: "#d1d1d1", fontSize: "1rem", margin: "5px 0" }}>
         Max Quality {plan.resolution}

@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login, userRegister } from "../../../redux/slices/authSlice";
+import {userRegister } from "../../../redux/slices/authSlice";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+
 
 interface SignUpForm {
   name: string;
@@ -55,8 +56,9 @@ export default function Home() {
   // };
 
   const handleSignup = async (data: SignUpForm) => {
+    setError(null)
     console.log(data, "register");
-    const res: any = await dispatch(
+    const res: any = await dispatch<any>(
       userRegister({
         name: data.name,
         email: data.email,

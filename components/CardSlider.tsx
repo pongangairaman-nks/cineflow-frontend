@@ -1,16 +1,15 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Slider from "react-slick";
 import Card from "./Card";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { fetchVideos } from "../redux/slices/movieSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../redux/store"; // Import types
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store"; // Import types
 import VideoModal from "./videoModal";
 
 function CardSlider({ allVideos }: any) {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
   //   const {movies} = useSelector((state:any)=>state?.movie)
   console.log(allVideos, "movies");
   //  useEffect(()=>{

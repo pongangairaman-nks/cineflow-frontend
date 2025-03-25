@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
 import { useDispatch } from "react-redux";
-import{setStoreMovie,setShowDialog, setClickedcard, fetchVideoDescription} from "../redux/slices/movieSlice"
+import{setShowDialog, setClickedcard, fetchVideoDescription} from "../redux/slices/movieSlice"
 
 interface CardProps {
   imageUrl: any;
@@ -14,15 +12,18 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ imageUrl, title, videoUrl,ele }) => {
   const dispatch = useDispatch()
-  const [showDialog, setShowDIalog] = useState<boolean>(false);
+  // const [showDialog, setShowDIalog] = useState<boolean>(false);
 
   const hanldeVideo = async (video: string, image: string,ele:any) => {
+    let res
     if(!ele?.aiDescription){
-    const res = await dispatch(fetchVideoDescription(ele?._id))
+     res = await dispatch(fetchVideoDescription(ele?._id))
     }
-
-    dispatch(setShowDialog(true))
-    dispatch(setClickedcard(ele))
+    if(res){
+      dispatch(setShowDialog(true))
+      dispatch(setClickedcard(ele))
+    }
+ 
   };
 
   return (

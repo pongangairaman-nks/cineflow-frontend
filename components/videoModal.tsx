@@ -1,9 +1,7 @@
 "use client";
-import React, { useRef, useState, CSSProperties, useEffect } from "react";
-import Plyr from "plyr-react";
+import React, { useState, CSSProperties, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactModal from "react-modal";
-import ReactPlayer from "react-player";
 import { AppDispatch } from "../redux/store";
 import {
   addCommentToVideo,
@@ -14,14 +12,11 @@ import {
   updateUserWatchHistory,
 } from "../redux/slices/movieSlice";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import CloseIcon from "@mui/icons-material/Close";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useRouter } from "next/navigation";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
@@ -29,15 +24,15 @@ import CommentIcon from "@mui/icons-material/Comment";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Avatar, TextField, Tooltip } from "@mui/material";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-
+import { RootState } from '../redux/store';
 // ReactModal.setAppElement('#__next');
 const VideoModal = () => {
-  const comments = 3;
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-  };
+  // const comments = 3;
+  // const override: CSSProperties = {
+  //   display: "block",
+  //   margin: "0 auto",
+  //   borderColor: "red",
+  // };
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [items, setItems] = useState<string[][]>([]);
@@ -45,14 +40,12 @@ const VideoModal = () => {
   const [inputComment, setInputComment] = useState<string>("");
   // const playerRef = useRef<any>(null);
   const {
-    selectedMovie,
     showDialog,
     clickedCard,
     showDes,
-    commentResponse,
     videoComments,
     likeResponse,
-  } = useSelector((state: any) => state.movie);
+  } = useSelector((state:RootState) => state.movie);
   console.log(inputComment, "inputComment");
   console.log(clickedCard, "clickedCard");
   // const [isModalOpen, setIsModalOpen] = useState(false);
@@ -269,7 +262,7 @@ const VideoModal = () => {
                       {videoComments?.result &&
                         videoComments?.result?.map(
                           (ele: any, index: number) => (
-                            <div className="comment-profile">
+                            <div className="comment-profile" key={index}>
                               <Avatar
                                 alt={ele?.user.name}
                                 src={ele?.user?.avatar}

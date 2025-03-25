@@ -1,6 +1,6 @@
 "use client"
 import React,{useEffect} from 'react'
-import Navbar from '../../components/Navbar'
+// import Navbar from '../../components/Navbar'
 import HeroSection from '../../components/HeroSection'
 import CardSlider from '../../components/CardSlider'
 import { useDispatch, useSelector } from "react-redux";

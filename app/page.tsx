@@ -1,5 +1,5 @@
 "use client"
-import Head from "next/head";
+// import Head from "next/head";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 // export const metadata = {

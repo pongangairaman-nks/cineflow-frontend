@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login ,userLogin} from "../../../redux/slices/authSlice";
+import { userLogin} from "../../../redux/slices/authSlice";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -50,9 +50,10 @@ export default function Home() {
   // };
  console.log(process.env.NEXT_PUBLIC_BASE_URL,"baseurl")
   const handleLogin = async (data:LoginForm)=>{
+    setError(null)
     console.log(data,"data")
-   const res:any = await  dispatch(userLogin({ email: data.email, password: data.password }))
-   console.log(res)
+   const res = await  dispatch(userLogin({ email: data.email, password: data.password }))as unknown as YourExpectedResponseType
+  //  console.log(res)
    if(res?.payload?.status == 200){
     router.push("/dashboard")
    }

@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import SubscriptionCard from "../../components/SubscriptionCard";
-import { features } from "process";
 import Feature from "../../components/FeatureCard";
 
 const Subscription = () => {

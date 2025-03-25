@@ -14,12 +14,11 @@ import {
   Box,
   Typography,
   Paper,
-  Card,
 } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import { fetchUserProfile, updateAvatar } from "../../redux/slices/userSlice";
+// import MenuIcon from "@mui/icons-material/Menu";
+// import CloseIcon from "@mui/icons-material/Close";
+import { fetchUserProfile } from "../../redux/slices/userSlice";
 import { AppDispatch } from "../../redux/store";
 import { logout } from "../../redux/slices/authSlice";
 import { useRouter } from "next/navigation";
@@ -28,12 +27,12 @@ export default function ProfilePage() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const { profile } = useSelector((state: RootState) => state.userSlice);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [selectedFile, setSelectedFile] = useState<any>();
-  const [mywatchList, setMywatchList] = useState<any>([]);
+  // const [selectedFile, setSelectedFile] = useState<any>();
+  const [mywatchList, setMywatchList] = useState<any[]>([]);
 
   const handleAvatarChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -65,7 +64,7 @@ export default function ProfilePage() {
   console.log(avatar, "avatar");
 
   useEffect(() => {
-    dispatch(fetchUserProfile("arg"));
+    dispatch<any>(fetchUserProfile("arg"));
     const watcherLater = JSON.parse(localStorage.getItem("myLists") ?? "[]");
     // console.log(watcherLater, "later");
     setMywatchList(watcherLater);
@@ -164,7 +163,7 @@ export default function ProfilePage() {
                 {mywatchList &&
                   mywatchList?.map((ele: any, index: number) => (
                     <>
-                      <div className="card">
+                      <div className="card" key={index}>
                         <div className="card-image-container">
                           <Image
                             src={ele?.poster}

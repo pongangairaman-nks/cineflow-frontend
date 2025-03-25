@@ -2,10 +2,9 @@
 import "../styles/globals.css";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
-import { CSSProperties } from "react";
-import { useRouter } from "next/navigation";
-import DotLoader from "react-spinners/DotLoader";
-import useAuth from "@/hooks/useAuth";
+// import { CSSProperties } from "react";
+// import { useRouter } from "next/navigation";
+// import useAuth from "@/hooks/useAuth";
 import Navbar from "../components/Navbar";
 import { usePathname } from "next/navigation";
 
@@ -16,14 +15,10 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isAuthRoute = pathname.startsWith("/auth");
-  const override: CSSProperties = {
-    display: "block",
-    margin: "auto",
-    borderColor: "red",
-  };
 
-  const router = useRouter();
-  const { authenticated, loading } = useAuth();
+
+  // const router = useRouter();
+  // const { authenticated, loading } = useAuth();
 
   // If the page is loading and user is authenticated, show the spinner.
   // Once loading is complete and if the user is not authenticated, redirect to login page.

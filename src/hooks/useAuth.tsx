@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import jwt from 'jsonwebtoken';
 
 const useAuth = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem('token'); 
@@ -14,6 +14,7 @@ const useAuth = () => {
         jwt.verify(token, process.env.JWT_SECRET!); // Verify JWT token
         setAuthenticated(true);
       } catch (error) {
+        console.log(error);
         setAuthenticated(false);
       }
     } else {

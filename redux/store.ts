@@ -2,7 +2,8 @@ import { configureStore  } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import movieSlice from "./slices/movieSlice";
 import userSlice from "./slices/userSlice"
-import thunkMiddleware from 'redux-thunk';
+// import { ThunkDispatch } from 'redux-thunk';
+// import { AnyAction } from 'redux';
 
 
 export const store = configureStore({

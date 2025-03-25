@@ -2,7 +2,7 @@
 import Image from "next/image";
 // import styles from './HeroSection.module.css';
 import { motion } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setClickedcard,
   setLoading,
@@ -11,7 +11,7 @@ import {
 } from "../redux/slices/movieSlice";
 import { useRouter } from "next/navigation";
 
-const HeroSection = ({ data }: any) => {
+const HeroSection = ({ data }: { data: any }) => {
   console.log(data, "data");
   const router = useRouter();
   const dispatch = useDispatch();

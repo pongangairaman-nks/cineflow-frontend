@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Navbar from "../../components/Navbar";
 import HeroSection from "../../components/HeroSection";
 import CardSlider from "../../components/CardSlider";
 // import MovieRow from "../../components/MovieRow";

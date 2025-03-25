@@ -124,11 +124,12 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px;
+  padding: 5px;
   background: linear-gradient(to top, transparent, rgba(0, 0, 0, 0.9));
   color: white;
   z-index: 1000;
   transition: background 0.3s ease;
+  background-color: #120c1f;
 }
 
 .Scrollednavbar {
@@ -140,11 +141,12 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px;
+  padding: 5px;
   background: linear-gradient(to top, transparent, rgba(0, 0, 0, 30.9));
   color: white;
   z-index: 1000;
   transition: background 0.3s ease;
+  background-color: #120c1f;
 }
 
 .logo Link {
@@ -212,7 +214,7 @@ a {
 
 /* Title Styling */
 .title {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   margin-bottom: 15px;
   letter-spacing: 1px;
@@ -221,11 +223,12 @@ a {
 
 /* Description Styling */
 .description {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 30px;
   max-width: 700px;
   /* margin-left: auto; */
   margin-right: auto;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Button Styles */
@@ -423,10 +426,11 @@ a {
 /* Gradient Text */
 .logo-text {
   position: relative;
-  background: linear-gradient(45deg, #b20710, #800080); /* Gradient for text */
+  background: linear-gradient(91deg, #e80a12, #e81717);
   -webkit-background-clip: text; /* Use text as a mask to show gradient */
   color: transparent; /* Make the text color transparent to show gradient */
   z-index: 1; /* Ensure text is on top */
+  font-size: 30px;
 }
 
 .show-image {

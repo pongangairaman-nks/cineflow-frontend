@@ -68,7 +68,7 @@ const HeroSection = ({ data }:HeroSectionProps) => {
       </motion.div>
 
       {/* Using Next.js Image component */}
-      <div className="imageContainer">
+      <div className="imageContainer ">
         <Image
           src={data?.image} // Replace with your image URL
           alt="Hero Background"
@@ -76,6 +76,8 @@ const HeroSection = ({ data }:HeroSectionProps) => {
           objectFit="cover" // Ensures the image covers the area without distortion
           quality={100} // Set the quality to 100 for optimal image quality
           unoptimized
+          style={{ top: "50px" }}
+          
         />
       </div>
     </section>

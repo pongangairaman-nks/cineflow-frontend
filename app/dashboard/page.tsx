@@ -52,15 +52,14 @@ export default function Dashboard() {
 
   const featuredMovie :HeroData = {
     urlName: "Avatar",
-    title: "Avatar: The Way of Water",
+    title: "Stranger Things: The Way of shadows",
     type: "movie",
-    genre: "Adventure",
+    genre: "sifi-thiller",
     image:
-      "https://cineflow-bucket.s3.eu-north-1.amazonaws.com/poster/Avatar-The+way+of+water.jpg",
+      "https://cineflow-bucket.s3.eu-north-1.amazonaws.com/poster/1741755787909-stranger+things.jpg",
     videoUrl:
-      "https://cineflow-bucket.s3.eu-north-1.amazonaws.com/videos/The+Beauty+Of+Avatar+-+The+Way+Of+Water.mp4",
-    description:
-      "The sea is your home, before your birth and after your death.",
+      "https://cineflow-bucket.s3.eu-north-1.amazonaws.com/videos/1741755770490-stranger-things.mp4",   description:
+      "When a young boy vanishes, a small town unearths a sinister mystery. Demogorgons stalk the night, a girl with uncanny abilities emerges, and a portal to a terrifying dimension threatens to consume everything. Can a group of kids save their friend and reality itself before it's too late?\n",
   };
 
   const allMovies = allVideos?.filter((ele) => {

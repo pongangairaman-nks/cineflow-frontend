@@ -14,15 +14,11 @@ import {
   Paper
 } from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import AnimatedCineFlowLogo from "../../components/AnimatedLogo";
 import { fetchUserProfile } from "../../redux/slices/userSlice";
 
 export default function ProfilePage() {
   const dispatch = useDispatch<AppDispatch>();
   const { profile } = useSelector((state: RootState) => state.user);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [name, setName] = useState(profile?.name || "");
   const [email, setEmail] = useState(profile?.email || "");
   const avatar =
@@ -44,71 +40,11 @@ export default function ProfilePage() {
     <Box
       sx={{
         display: "flex",
+        flex: 1,
         minHeight: "100vh",
-        bgcolor: "black",
         color: "white"
       }}
     >
-      {/* ✅ Collapsible Sidebar */}
-      <Box
-        sx={{
-          width: sidebarOpen ? 250 : 60,
-          transition: "width 0.3s",
-          bgcolor: "grey.900",
-          p: 2,
-          borderRight: "1px solid grey"
-        }}
-      >
-        <AnimatedCineFlowLogo />
-
-        <Button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          sx={{ color: "grey.400" }}
-        >
-          {sidebarOpen ? <CloseIcon /> : <MenuIcon />}
-        </Button>
-        {sidebarOpen && (
-          <>
-            <Typography variant="h6" sx={{ mb: 3 }}>
-              Settings
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <Button
-                variant="text"
-                sx={{ color: "white", justifyContent: "flex-start" }}
-              >
-                Profile
-              </Button>
-              <Button
-                variant="text"
-                sx={{ color: "grey.500", justifyContent: "flex-start" }}
-              >
-                Account
-              </Button>
-              <Button
-                variant="text"
-                sx={{ color: "grey.500", justifyContent: "flex-start" }}
-              >
-                Appearance
-              </Button>
-              <Button
-                variant="text"
-                sx={{ color: "grey.500", justifyContent: "flex-start" }}
-              >
-                Notifications
-              </Button>
-              <Button
-                variant="text"
-                sx={{ color: "grey.500", justifyContent: "flex-start" }}
-              >
-                Display
-              </Button>
-            </Box>
-          </>
-        )}
-      </Box>
-
-      {/* ✅ Settings Panel */}
       <Container sx={{ flex: 1, py: 6 }}>
         <Typography variant="h4">Profile</Typography>
         <Typography variant="body2" color="grey.500">

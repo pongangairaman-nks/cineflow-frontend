@@ -107,11 +107,11 @@ const SubscriptionCards = () => {
     <div
       style={{
         display: "flex",
+        flex: 1,
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100vh",
-        background: "black",
         color: "white",
         padding: "20px"
       }}

@@ -1,24 +1,10 @@
 "use client";
 
 // app/dashboard/page.tsx
-import React, { useState } from "react";
-import {
-  Home,
-  Film,
-  Tv,
-  Star,
-  Settings,
-  LogOut,
-  Bell,
-  Layers,
-  Bookmark,
-  Info
-} from "lucide-react";
-import { Search, Mic, User } from "lucide-react";
-import SearchInput from "../../components/SearchComponent";
+import React from "react";
+import { Info, Play } from "lucide-react";
 import ScrollableSection from "../../components/ScrollableSection";
 import Image from "next/image";
-import { Play } from "lucide-react";
 
 const recommendedShows = [
   {
@@ -80,150 +66,73 @@ const recommendedShows = [
 ];
 
 export default function DashboardPage() {
-  const [activeItem, setActiveItem] = useState("Home");
-
-  const menuItems = [
-    { icon: Home, label: "Home" },
-    { icon: Film, label: "Movies" },
-    { icon: Tv, label: "TV Shows" },
-    { icon: Layers, label: "Series" },
-    { icon: Star, label: "My Favorites" },
-    { icon: Bookmark, label: "Wishlist" },
-    { icon: Settings, label: "Settings" }
-  ];
-
   return (
-    <div className="flex h-screen bg-[#14171F] bg-[url('/path-to-image.jpg')] bg-cover bg-center">
-      <div className="absolute inset-0 bg-[url('/bg-image.jpg')] bg-cover bg-center opacity-50 w-[100vw] h-[100vh] pointer-events-none"></div>
+    <div>
+      <div className="h-[70vh] mx-[24px] bg-red-500 relative">
+        <Image
+          src="https://cineflow-videofiles.s3.ap-south-1.amazonaws.com/posters/1741603384744-squidgametrailerposter.jpg"
+          alt="Featured"
+          fill
+          className="object-cover rounded-[8px] shadow-md"
+          priority={false}
+        />
+        <div className="absolute left-[80px] bottom-[100px] text-white space-y-6 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+          {/* Title */}
+          <h1 style={{ fontSize: "32px", fontWeight: "bold" }}>
+            Lost In Space 2
+          </h1>
 
-      {/* Sidebar */}
-      <div className="h-full min-h-screen w-[240px] left-0 top-0 bg-[#1E1E2E] py-6 flex flex-col z-10">
-        <div className="flex items-center mb-10 px-[24px]">
-          <div className="h-[64px] bg-white rounded-full flex items-center justify-center mr-3">
-            <span className="text-black font-bold text-lg">CINEFLOW</span>
-          </div>
-        </div>
-        <nav className="flex-grow">
-          {menuItems.map((item) => (
-            <div
-              key={item.label}
-              onClick={() => setActiveItem(item.label)}
-              className={` mt-[12px]
-              flex items-center w-full px-[16px] py-[8px] rounded-lg mb-2 transition-colors duration-200 cursor-pointer
-              ${
-                activeItem === item.label
-                  ? "bg-[#6E44FF] text-white"
-                  : "text-gray-400 hover:bg-[#2C2C3E] hover:text-white"
-              }
-            `}
+          {/* Subtitle */}
+          <p style={{ fontSize: 18 }}>A Netflix Original Series</p>
+
+          {/* Buttons */}
+          <div style={{ marginTop: "24px", display: "flex", gap: 16 }}>
+            {/* Play Button */}
+            <button
+              style={{
+                backgroundColor: "white",
+                width: "160px",
+                display: "flex",
+                alignItems: "center",
+                height: "48px",
+                borderRadius: "4px"
+              }}
             >
-              <item.icon size={20} className="mr-3" />
-              <span className="text-sm font-light ml-[16px]">{item.label}</span>
-            </div>
-          ))}
-        </nav>
-        <div
-          className={` mt-[12px]
-              flex items-center w-full px-[16px] py-[8px] rounded-lg mb-2 transition-colors duration-200 cursor-pointer
-              text-gray-400 hover:bg-[#2C2C3E] hover:text-white
-            `}
-        >
-          <LogOut size={20} className="mr-3" />
-          <span className="text-sm font-light ml-[16px]">Logout</span>
+              <Play color="black" />
+              <span style={{ color: "black", marginLeft: "8px" }}>Play</span>
+            </button>
+
+            {/* More Info Button */}
+            <button
+              style={{
+                backgroundColor: "gray",
+                width: "180px",
+                display: "flex",
+                alignItems: "center",
+                height: "48px",
+                borderRadius: "4px"
+              }}
+            >
+              <Info className="w-5 h-5 stroke-white" />
+              <span style={{ marginLeft: "8px" }}>More Info</span>
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* Main Content */}
-      <div className="h-full flex-1 overflow-y-auto">
-        <div>
-          <nav className="flex items-center justify-end px-[16px] py-[16px]">
-            <div className="mr-[16px] flex items-center bg-[#2C2C3E] px-[16px] py-2 w-1/3 rounded-[4px] h-10">
-              <Search className="text-gray-400 mr-3" size={20} />
-              <SearchInput />
-              <Mic className="text-gray-400 ml-3" size={20} />
-            </div>
-
-            <div className="flex items-center px-3 py-2 rounded-[4px] h-10">
-              <button className="mr-[16px] text-white p-2 bg-[#2C2C3E]">
-                <div className="w-8 h-8 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center">
-                  <Bell size={20} />
-                </div>
-              </button>
-              <button className="text-white p-2 bg-[#2C2C3E]">
-                <div className="w-8 h-8 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center">
-                  <User size={20} />
-                </div>
-              </button>
-            </div>
-          </nav>
-        </div>
-        {/* Hero Background */}
-        <div className="h-[70vh] mx-[24px] bg-red-500 relative">
-          <Image
-            src="https://cineflow-videofiles.s3.ap-south-1.amazonaws.com/posters/1741603384744-squidgametrailerposter.jpg"
-            alt="Featured"
-            fill
-            className="object-cover rounded-[8px] shadow-md"
-            priority={false}
-          />
-          <div className="absolute left-[80px] bottom-[100px] text-white space-y-6 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
-            {/* Title */}
-            <h1 style={{ fontSize: "32px", fontWeight: "bold" }}>
-              Lost In Space 2
-            </h1>
-
-            {/* Subtitle */}
-            <p style={{ fontSize: 18 }}>A Netflix Original Series</p>
-
-            {/* Buttons */}
-            <div style={{ marginTop: "24px", display: "flex", gap: 16 }}>
-              {/* Play Button */}
-              <button
-                style={{
-                  backgroundColor: "white",
-                  width: "160px",
-                  display: "flex",
-                  alignItems: "center",
-                  height: "48px",
-                  borderRadius: "4px"
-                }}
-              >
-                <Play color="black" />
-                <span style={{ color: "black", marginLeft: "8px" }}>Play</span>
-              </button>
-
-              {/* More Info Button */}
-              <button
-                style={{
-                  backgroundColor: "gray",
-                  width: "180px",
-                  display: "flex",
-                  alignItems: "center",
-                  height: "48px",
-                  borderRadius: "4px"
-                }}
-              >
-                <Info className="w-5 h-5 stroke-white" />
-                <span style={{ marginLeft: "8px" }}>More Info</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="mt-[40px]">
-          <ScrollableSection
-            title={"Recommended for you"}
-            data={recommendedShows}
-          />
-        </div>
-        <div className="mt-[40px]">
-          <ScrollableSection title={"Trending Now"} data={recommendedShows} />
-        </div>
-        <div className="mt-[40px]">
-          <ScrollableSection title={"Movies"} data={recommendedShows} />
-        </div>
-        <div className="mt-[40px]">
-          <ScrollableSection title={"TV Shows"} data={recommendedShows} />
-        </div>
+      <div className="mt-[40px]">
+        <ScrollableSection
+          title={"Recommended for you"}
+          data={recommendedShows}
+        />
+      </div>
+      <div className="mt-[40px]">
+        <ScrollableSection title={"Trending Now"} data={recommendedShows} />
+      </div>
+      <div className="mt-[40px]">
+        <ScrollableSection title={"Movies"} data={recommendedShows} />
+      </div>
+      <div className="mt-[40px]">
+        <ScrollableSection title={"TV Shows"} data={recommendedShows} />
       </div>
     </div>
   );

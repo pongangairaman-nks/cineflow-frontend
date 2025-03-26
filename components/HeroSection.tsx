@@ -1,54 +1,85 @@
 "use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
+// import styles from './HeroSection.module.css';
+import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import {
+  setClickedcard,
+  setLoading,
+  setShowDialog,
+  setStoreMovie,
+} from "../redux/slices/movieSlice";
+import { useRouter } from "next/navigation";
+import { HeroData } from "../app/dashboard/page";
+interface HeroSectionProps {
+  data: HeroData;
+}
 
-export default function HeroSection() {
-  const featuredMovie = {
-    title: "Furiosa: Mad Max Saga",
-    image:
-      "https://cineflow-videofiles.s3.ap-south-1.amazonaws.com/images/featured-movie.jpg",
-    description: "The prequel to the 2015 film Mad Max: Fury Road"
+const HeroSection = ({ data }:HeroSectionProps) => {
+  // console.log(data, "data");
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const handleVideo = () => {
+    dispatch(setStoreMovie(data?.videoUrl));
+    // dis
+    router.push(`video/${data?.urlName}`);
   };
 
+  const handleInfo = () => {
+    dispatch(setLoading(true));
+    dispatch(setShowDialog(true));
+    dispatch(
+      setClickedcard({
+        title: data?.title,
+        type: data?.type,
+        genre: data?.genre,
+        poster: data?.image,
+        aiDescription: data?.description,
+      })
+    );
+  };
   return (
-    <section className="relative h-screen bg-black text-white flex flex-col justify-end p-12">
-      {/* Background image from s3 */}
-      <div className="inset-0 -z-10 opacity-50">
+    <section className="hero">
+      <motion.div
+        className="overlay"
+        initial={{ x: "-100%" }} // Initial position (off-screen to the left)
+        animate={{ x: 0 }} // Animate to the normal position (x: 0)
+        exit={{ x: "100%" }} // Optional: animate the element off-screen to the right when exiting
+        transition={{
+          type: "spring", // You can adjust the type of transition
+          stiffness: 100, // Adjust the spring stiffness for bounce effect
+          damping: 25, // Control the bounce effect
+        }}
+      >
+        <div className="content">
+          <h1 className="title">{data?.title}</h1>
+          <p className="description">{data?.description}</p>
+          <div className="buttons">
+            <motion.button className="playBtn" onClick={handleVideo}>
+              {" "}
+              ▶ Watch Now
+            </motion.button>
+            <motion.button className="moreInfoBtn" onClick={handleInfo}>
+              {" "}
+              ℹ More Info
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Using Next.js Image component */}
+      <div className="imageContainer">
         <Image
-          src={featuredMovie.image}
-          alt={featuredMovie.title}
-          layout="fill"
-          objectFit="cover"
-          quality={100}
-          priority
+          src={data?.image} // Replace with your image URL
+          alt="Hero Background"
+          layout="fill" // This makes the image cover the whole section
+          objectFit="cover" // Ensures the image covers the area without distortion
+          quality={100} // Set the quality to 100 for optimal image quality
+          unoptimized
         />
-        <div className="absolute inset-0 bg-gradient-to from-black 2-transaparent"></div>
-        {/* Featuring movie title and description */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2 }}
-        >
-          <h2 className="text-6xl font-bold">{featuredMovie.title}</h2>
-          <p className="mt-2">{featuredMovie.description}</p>
-        </motion.div>
-      </div>
-      {/* Buttons (Play and More info) */}
-      <div className="mt-4 flex space-x-4">
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          className="bg-[var(--foreground)] px-6 py-3 rounded font-semibold"
-        >
-          ▶ Watch Now
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          className="bg-gray-700 px-6 py-3 rounded font-semibold"
-        >
-          ℹ More Info
-        </motion.button>
       </div>
     </section>
   );
-}
+};
+
+export default HeroSection;

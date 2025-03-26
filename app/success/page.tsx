@@ -1,20 +1,12 @@
 "use client";
-import { Suspense } from "react";
-import { useEffect } from "react";
+
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-function SuccessPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <SuccessComponent />
-    </Suspense>
-  );
-}
-function SuccessComponent() {
-  //Auto redirect after 3 seconds
-
+// Separate component to handle search params
+function SuccessContent() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
   console.log("message", type);
@@ -22,7 +14,7 @@ function SuccessComponent() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/dashboard/home");
+      router.push("/dashboard");
     }, 3000);
     return () => clearTimeout(timer);
   }, [router]);
@@ -42,15 +34,13 @@ function SuccessComponent() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        {type === "login"
-          ? "Bravo! 🎉 You've just unlocked another cinematic adventure! Keep exploring, keep watching, and let the magic of movies continue! 🍿✨"
-          : type === "signup"
+        {type === "login" || type === "signup"
           ? "Bravo! 🎉 You've just unlocked another cinematic adventure! Keep exploring, keep watching, and let the magic of movies continue! 🍿✨"
           : "Success"}
       </motion.h2>
       <Button
         className="mt-6 bg-[var(--foreground)] text-white px-6 py-3 font-semibold rounded"
-        onClick={() => router.push("/dashboard/home")}
+        onClick={() => router.push("/dashboard")}
       >
         Go to Dashboard
       </Button>
@@ -58,4 +48,11 @@ function SuccessComponent() {
   );
 }
 
-export default SuccessPage;
+// Page component with Suspense boundary
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-black text-white">Loading...</div>}>
+      <SuccessContent />
+    </Suspense>
+  );
+}

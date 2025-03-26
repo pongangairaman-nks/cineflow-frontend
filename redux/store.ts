@@ -1,15 +1,18 @@
-"use client";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore  } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
-import videoReducer from "./slices/videoSlice";
-import userReducer from "./slices/userSlice";
+import movieSlice from "./slices/movieSlice";
+import userSlice from "./slices/userSlice"
+// import { ThunkDispatch } from 'redux-thunk';
+// import { AnyAction } from 'redux';
+
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    videos: videoReducer,
-    user: userReducer
-  }
+    movie:movieSlice,
+    userSlice:userSlice
+  },
+
 });
 
 export type RootState = ReturnType<typeof store.getState>;

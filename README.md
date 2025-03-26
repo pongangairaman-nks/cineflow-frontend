@@ -17,13 +17,9 @@
 ┃ ┣ 📜 Navbar.tsx → Netflix Navigation Bar
 ┃ ┣ 📜 HeroSection.tsx → Hero Section (Featured Movie Banner)
 ┃ ┣ 📜 MovieRow.tsx → Scrollable Movie Sections
-┣ 📂 hooks → Hooks to Protect Pages
-┃ ┣ 📜 userAuth.ts
 ┣ 📂 redux → Redux Store Setup
 ┃ ┣ 📂 slices → State Slices (Movies, User, etc.)
-┃ ┃ ┣ 📜 authSlice.ts → Movie Fetching State (Redux Toolkit)
-┃ ┃ ┣ 📜 userSlice.ts → Movie Fetching State (Redux Toolkit)
-┃ ┃ ┣ 📜 videoSlice.ts → Movie Fetching State (Redux Toolkit)
+┃ ┃ ┣ 📜 movieSlice.ts → Movie Fetching State (Redux Toolkit)
 ┃ ┣ 📜 store.ts → Redux Store Configuration
 ┣ 📂 zustand → Zustand Store Setup
 ┃ ┣ 📜 store.ts → Zustand Store for UI State

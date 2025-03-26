@@ -1,49 +1,23 @@
-"use client";
-import { useEffect } from "react";
-import { useParams } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../../../redux/store";
-import {
-  fetchVideoDescription,
-  updateWatchHistory
-} from "../../../redux/slices/videoSlice";
-import { Typography, Paper } from "@mui/material";
-// import Plyr from "plyr-react";
-import "plyr-react/plyr.css";
+"use client"
+import React from "react";
 import ReactPlayer from "react-player";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
-export default function VideoPage() {
-  const { id: videoId } = useParams();
-
-  const dispatch = useDispatch<AppDispatch>();
-  const { videos } = useSelector((state: RootState) => state.videos);
-  console.log("videoId", videoId);
-  console.log("videos", videos);
-  const video = videos.find((video) => video._id === videoId);
-  console.log("video", video);
-  useEffect(() => {
-    if (video && !video.aiDescription) {
-      dispatch(fetchVideoDescription(videoId as string));
-    }
-    dispatch(updateWatchHistory(videoId as string));
-  }, [video, videoId, dispatch]);
+const VideoPage = () => {
+  const { selectedMovie } = useSelector((state: RootState) => state.movie);
   return (
-    <div className="bg-black text-white min-h-screen p-10">
-      <h2 className="text-3xl font-bold">{video?.title}</h2>
+    <div>
+      {" "}
       <ReactPlayer
-        className="player"
-        url={video?.url}
-        // width="100%"
-        // height="100%"
-        controls={true}
+        // ref={playerRef}
+        url={selectedMovie}
         playing={true}
+        controls={true}
+        className="player"
       />
-      <Paper sx={{ mt: 3, p: 3 }}>
-        <Typography variant="h6">AI Generated Description</Typography>
-        <Typography variant="body2">
-          {video?.aiDescription || "Generating description..."}
-        </Typography>
-      </Paper>
     </div>
   );
-}
+};
+
+export default VideoPage;

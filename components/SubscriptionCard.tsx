@@ -1,31 +1,48 @@
 "use client";
 
 import React from "react";
+import { CSSProperties } from 'react';
 import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY);
-const plans = [
+const stripePromise = process.env.NEXT_PUBLIC_PUBLISHABLE_KEY
+? loadStripe(process.env.NEXT_PUBLIC_PUBLISHABLE_KEY)
+: Promise.reject(new Error("Stripe publishable key is missing"));
+export interface Plan{
+  id:number;
+  planName:string;
+  resolution:string;
+  nunmerOfDevices:string;
+  features:string[];
+  price:number
+}
+const plans :Plan[]= [
   {
-    name: "Basic",
-    price: 99,
-    description: "Good Quality - 720p Resolution",
-    nunmerOfDevices: "1 Device"
+    id: 1,
+    planName: "Mobile",
+    nunmerOfDevices: "1",
+    resolution: "480p",
+    features: ["Good Video Quality", "For phones and Tablet"],
+    price: 149,
   },
+  // { id: 2, planName: "Basic", resolution: "720p", features: [""], price: "199/mo" },
   {
-    name: "Standard",
-    price: 199,
-    description: "Better Quality - 1080p Resolution",
-    nunmerOfDevices: "2 Device"
-  },
-  {
-    name: "Premium",
+    id: 3,
+    planName: "Standard",
+    resolution: "1080p",
+    nunmerOfDevices: "2",
+    features: [""],
     price: 499,
-    description: "Best Quality - 4K + HDR",
-    nunmerOfDevices: "4 Devices"
-  }
+  },
+  {
+    id: 4,
+    planName: "Premium",
+    resolution: "4K + HDR",
+    nunmerOfDevices: "4",
+    features: [""],
+    price: 649,
+  },
 ];
 
-const cardStyle = {
+const cardStyle:CSSProperties = {
   width: "300px",
   height: "300px",
   background:
@@ -37,7 +54,7 @@ const cardStyle = {
   padding: "20px",
   border: "1px solid grey",
   transition:
-    "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease-in-out"
+    "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease-in-out",
 };
 
 const buttonStyle = {
@@ -49,42 +66,11 @@ const buttonStyle = {
   borderRadius: "5px",
   cursor: "pointer",
   fontSize: "1rem",
-  transition: "background 0.3s ease-in-out"
+  transition: "background 0.3s ease-in-out",
 };
 
-const SubscriptionCard = ({ plan, handleCheckout }) => {
-  return (
-    <div
-      style={cardStyle}
-      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-    >
-      <h3 style={{ margin: "15px 0", fontSize: "1.8rem", color: "white" }}>
-        {plan.name}
-      </h3>
-      <p style={{ color: "#d1d1d1", fontSize: "1rem", margin: "5px 0" }}>
-        {plan.price}
-      </p>
-      <p style={{ color: "#d1d1d1", fontSize: "1rem", margin: "5px 0" }}>
-        {plan.description}
-      </p>
-      <p style={{ color: "#d1d1d1", fontSize: "1rem", margin: "5px 0" }}>
-        {plan.nunmerOfDevices}
-      </p>
-      <button
-        style={buttonStyle}
-        onClick={() => handleCheckout(plan.name, plan.price)}
-        onMouseEnter={(e) => (e.currentTarget.style.background = "#b20710")}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "#e50914")}
-      >
-        Subscribe
-      </button>
-    </div>
-  );
-};
-
-const SubscriptionCards = () => {
-  const handleCheckout = async (name, price) => {
+const SubscriptionCard = ({ plan }: { plan: Plan }) => {
+  const handleCheckout = async (name:string, price:number) => {
     const res = await fetch("/api/checkout-session", {
       method: "POST",
       body: JSON.stringify({
@@ -102,18 +88,48 @@ const SubscriptionCards = () => {
       sessionId: id
     });
   };
+  return (
+    <div
+      style={cardStyle}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+    >
+      <h3 style={{ margin: "15px 0", fontSize: "1.8rem", color: "white" }}>
+        {plan.planName}
+      </h3>
+      <p style={{ color: "#d1d1d1", fontSize: "1rem", margin: "5px 0" }}>
+        &#x20B9; {`${plan.price} /month`}
+      </p>
+      <p style={{ color: "#d1d1d1", fontSize: "1rem", margin: "5px 0" }}>
+        Max Quality {plan.resolution}
+      </p>
+      <p style={{ color: "#d1d1d1", fontSize: "1rem", margin: "5px 0" }}>
+       No of Devices Supports {plan.nunmerOfDevices}
+      </p>
+      <button
+       onClick={() => {handleCheckout(plan.planName, plan.price)}}
+        style={buttonStyle}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "#b20710")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "#e50914")}
+      >
+        Subscribe
+      </button>
+    </div>
+  );
+};
 
+const SubscriptionCards = () => {
   return (
     <div
       style={{
         display: "flex",
-        flex: 1,
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100vh",
+        minHeight: "70vh",
+        background: "black",
         color: "white",
-        padding: "20px"
+        padding: "20px",
       }}
     >
       <h1 style={{ fontSize: "2.5rem", marginBottom: "20px" }}>
@@ -125,15 +141,11 @@ const SubscriptionCards = () => {
           flexWrap: "wrap",
           justifyContent: "center",
           gap: "20px",
-          maxWidth: "1000px"
+          maxWidth: "1000px",
         }}
       >
-        {plans.map((plan, index) => (
-          <SubscriptionCard
-            key={index}
-            plan={plan}
-            handleCheckout={handleCheckout}
-          />
+        {plans.map((plan, index: number) => (
+          <SubscriptionCard key={index} plan={plan} />
         ))}
       </div>
     </div>

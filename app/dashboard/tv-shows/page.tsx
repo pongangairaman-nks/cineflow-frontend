@@ -28,10 +28,9 @@ const TvShows = () => {
 
   return (
     <>
-      <div className="bg-black text-white min-h-screen">
-        {/* <Navbar /> */}
+      <div className="bg-black text-white min-h-screen p-[40px]">
         <HeroSection data={featuredMovie} />
-        <div className="trending-head">Trending Now</div>
+        <div className="trending-head mt-[24px]">Trending Now</div>
         <CardSlider allVideos={tvShows} />
       </div>
     </>

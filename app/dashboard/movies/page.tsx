@@ -28,10 +28,10 @@ const Movies = () => {
   }, [dispatch]);
   return (
     <>
-      <div className="bg-black text-white min-h-screen">
+      <div className="bg-black text-white min-h-screen p-[40px]">
         {/* <Navbar /> */}
         <HeroSection data={featuredMovie} />
-        <div className="trending-head">Trending Now</div>
+        <div className="trending-head mt-[24px]">Trending Now</div>
         <CardSlider allVideos={movies} />
       </div>
     </>

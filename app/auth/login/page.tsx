@@ -65,7 +65,7 @@ export default function Home() {
       <div className="absolute inset-0 bg-[url('/netflix-bg.jpg')] bg-cover bg-center opacity-50 w-[100vw] h-[100vh]"></div>
       <div className="absolute inset-0 bg-overlay"></div>
       <div className="auth-box z-2">
-        <h1 className="text-4xl font-bold text-center text-[var(--foreground)] heading">
+        <h1 className="text-4xl font-bold text-center text-[var(--foreground)] heading logo-text">
           CineFlow
         </h1>
         {error && (
@@ -116,6 +116,7 @@ export default function Home() {
               type="submit"
               className="bg-[var(--foreground)] text-white-800 font-semibold py-3 mt-3 w-full"
               disabled={!isValid}
+              style={{ backgroundColor: "#6E44FF" }}
             >
               Sign In
             </button>
@@ -124,7 +125,11 @@ export default function Home() {
 
         <div className="mt-5 flex justify-between text-sm text-gray-400 p-3 forgotSection">
           <Link href="#">Forgot password?</Link>
-          <Link href="/auth/signup" className="text-[var(--foreground)] mt-3">
+          <Link
+            href="/auth/signup"
+            className="text-[var(--foreground)] mt-3"
+            style={{ color: "#6E44FF" }}
+          >
             Sign up now
           </Link>
         </div>

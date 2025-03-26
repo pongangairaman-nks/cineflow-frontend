@@ -87,7 +87,7 @@ export default function ProfilePage() {
       }}
     >
       <Container sx={{ flex: 1, py: 6 }}>
-        <Paper sx={{ bgcolor: "grey.900", p: 4, mt: 4, borderRadius: 2 }}>
+        <Paper sx={{ bgcolor: "#312f33", p: 4, mt: 4, borderRadius: 2 }}>
           <Typography variant="h6" sx={{ color: "white" }}>
             Profile Settings
           </Typography>
@@ -149,7 +149,11 @@ export default function ProfilePage() {
           </Box>
 
           {/* ✅ Save Button */}
-          <Button variant="contained" color="error" sx={{ mt: 4 }}>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ mt: 4, backgroundColor: "#6E44FF" }}
+          >
             Save Changes
           </Button>
           <Button

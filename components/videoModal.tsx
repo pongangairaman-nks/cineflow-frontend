@@ -9,7 +9,7 @@ import {
   getCommentVideo,
   setShowDialog,
   setStoreMovie,
-  updateUserWatchHistory,
+  updateUserWatchHistory
 } from "../redux/slices/movieSlice";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -23,14 +23,13 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import CommentIcon from "@mui/icons-material/Comment";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Avatar, TextField, Tooltip } from "@mui/material";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { RootState } from '../redux/store';
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { RootState } from "../redux/store";
 // ReactModal.setAppElement('#__next');
 
 interface ClickCard {
   _id: string;
 }
-
 
 const VideoModal = () => {
   // const comments = 3;
@@ -45,15 +44,9 @@ const VideoModal = () => {
   const [showCommentBox, setShowCommentBox] = useState<boolean>(false);
   const [inputComment, setInputComment] = useState<string>("");
   // const playerRef = useRef<any>(null);
-  const {
-    showDialog,
-    clickedCard,
-    showDes,
-    videoComments,
-    likeResponse,
-  } = useSelector((state:RootState) => state.movie);
-  
-  
+  const { showDialog, clickedCard, showDes, videoComments, likeResponse } =
+    useSelector((state: RootState) => state.movie);
+
   console.log(inputComment, "inputComment");
   console.log(clickedCard, "clickedCard");
   // const [isModalOpen, setIsModalOpen] = useState(false);
@@ -75,7 +68,7 @@ const VideoModal = () => {
     dispatch(updateUserWatchHistory(clickedCard?._id));
     // console.log("click");
     dispatch(setShowDialog(!showDialog));
-    router.push(`video/${clickedCard?._id}`);
+    router.push(`/video/${clickedCard?._id}`);
     dispatch(setStoreMovie(clickedCard?.url));
   };
   const closeModal = () => {
@@ -85,7 +78,7 @@ const VideoModal = () => {
     //   playerRef.current.stop(); // Stop the video
     // }
   };
-  const handleWatchList = (clickedCard:ClickCard) => {
+  const handleWatchList = (clickedCard: ClickCard) => {
     const isExist = items?.some((ele) => ele?._id == clickedCard?._id);
     if (!isExist) {
       const newArr = [...items, clickedCard];
@@ -100,7 +93,7 @@ const VideoModal = () => {
   const handleComment = async () => {
     const commentData = {
       videoId: clickedCard?._id,
-      text: inputComment,
+      text: inputComment
     };
     const res = await dispatch(addCommentToVideo(commentData));
     if (res?.payload?.status == 200) {
@@ -157,7 +150,7 @@ const VideoModal = () => {
                         color: "white",
                         height: "35px",
                         width: "35px",
-                        zIndex: 999,
+                        zIndex: 999
                       }}
                       onClick={handleModal}
                     />
@@ -201,7 +194,7 @@ const VideoModal = () => {
                       fontSize: "small",
                       color: "grey",
                       width: "0.7rem",
-                      height: "0.7rem",
+                      height: "0.7rem"
                     }}
                   />
                   <div style={{ color: "white", marginLeft: "-3px" }}>2025</div>
@@ -210,7 +203,7 @@ const VideoModal = () => {
                       fontSize: "small",
                       color: "grey",
                       width: "0.7rem",
-                      height: "0.7rem",
+                      height: "0.7rem"
                     }}
                   />
                   <div style={{ color: "white", marginLeft: "-3px" }}>A</div>{" "}
@@ -219,7 +212,7 @@ const VideoModal = () => {
                       fontSize: "small",
                       color: "grey",
                       width: "0.7rem",
-                      height: "0.7rem",
+                      height: "0.7rem"
                     }}
                   />
                   <div style={{ color: "white", marginLeft: "-3px" }}>
@@ -230,7 +223,7 @@ const VideoModal = () => {
                       fontSize: "small",
                       color: "grey",
                       width: "0.7rem",
-                      height: "0.7rem",
+                      height: "0.7rem"
                     }}
                   />
                   <div style={{ color: "white", marginLeft: "-3px" }}>
@@ -248,10 +241,10 @@ const VideoModal = () => {
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           "&.Mui-focused fieldset": {
-                            borderColor: "red",
+                            borderColor: "red"
                             // color:"white"
-                          },
-                        },
+                          }
+                        }
                       }}
                       className="textfield"
                       onChange={(event) => {
@@ -265,11 +258,12 @@ const VideoModal = () => {
                       </button>
                     </div>
                   </div>
-                  {videoComments && videoComments.result && videoComments.result.length > 0 && (
-                    <div className="comment-parent">
-                      {videoComments?.result &&
-                        videoComments?.result?.map(
-                          (ele, index: number) => (
+                  {videoComments &&
+                    videoComments.result &&
+                    videoComments.result.length > 0 && (
+                      <div className="comment-parent">
+                        {videoComments?.result &&
+                          videoComments?.result?.map((ele, index: number) => (
                             <div className="comment-profile" key={index}>
                               <Avatar
                                 alt={ele?.user.name}
@@ -289,10 +283,9 @@ const VideoModal = () => {
                                 </Typography>
                               </div>
                             </div>
-                          )
-                        )}
-                    </div>
-                  )}
+                          ))}
+                      </div>
+                    )}
                 </div>
               ) : (
                 <></>

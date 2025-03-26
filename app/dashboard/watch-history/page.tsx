@@ -43,11 +43,16 @@ export default function Dashboard() {
       <Head>
         <title>My Custom Page Title</title>
       </Head>
-      <div className="bg-black text-white min-h-screen">
+      <div
+        className="bg-black text-white min-h-screen"
+        style={{ margin: "24px" }}
+      >
         {userWatchHistory?.length > 3 && (
           <>
-            <div className="trending-head">Continue watching...</div>
-            <CardSlider allVideos={userWatchHistory} />
+            <CardSlider
+              allVideos={userWatchHistory}
+              title={"Continue watching..."}
+            />
           </>
         )}
       </div>

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { AppDispatch, RootState } from "../store";
 
 //Defining interface of the Auth State
 interface AuthState {
@@ -14,7 +13,7 @@ interface AuthState {
 const initialState: AuthState = {
   user: null,
   token: null,
-  isAuthenticated: false,
+  isAuthenticated: false
 };
 
 export const userLogin = createAsyncThunk(
@@ -26,12 +25,12 @@ export const userLogin = createAsyncThunk(
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             email: formData.email,
-            password: formData.password,
-          }),
+            password: formData.password
+          })
         }
       );
       const registerLogin = await response.json();
@@ -48,20 +47,23 @@ export const userLogin = createAsyncThunk(
 
 export const userRegister = createAsyncThunk(
   "auth/register",
-  async (formData: { name: string; email: string; password: string },thunkAPI) => {
+  async (
+    formData: { name: string; email: string; password: string },
+    thunkAPI
+  ) => {
     try {
       const response = await await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}auth/register`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            name:formData?.name,
+            name: formData?.name,
             email: formData.email,
-            password: formData.password,
-          }),
+            password: formData.password
+          })
         }
       );
       const registerUser = await response.json();
@@ -82,9 +84,16 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     //login  reducer that takes the previous state and updates the state in the reducer
-    login: (state, action: PayloadAction<{user: { email: string }, email: string; token: string }>) => {
+    login: (
+      state,
+      action: PayloadAction<{
+        user: { email: string };
+        email: string;
+        token: string;
+      }>
+    ) => {
       state.user = {
-        email: action.payload.user.email,
+        email: action.payload.user.email
       };
       state.token = action.payload.token;
       state.isAuthenticated = true;
@@ -95,8 +104,8 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       localStorage.removeItem("token");
-    },
-  },
+    }
+  }
 });
 
 export const { login, logout } = authSlice.actions;

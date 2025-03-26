@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Container, Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { fetchUserProfile } from "../../../redux/slices/userSlice";
 import { AppDispatch } from "../../../redux/store";
 interface WatchListItem {
@@ -39,10 +39,10 @@ export default function ProfilePage() {
         color: "white"
       }}
     >
-      <Container sx={{ flex: 1, py: 6 }}>
+      <div style={{ flex: 1, margin: "32px" }}>
         {mywatchList && (
           <>
-            <Typography variant="body2" color="grey.500" marginLeft={"20px"}>
+            <Typography variant="body2" color="grey.500">
               My List
             </Typography>
             <div>
@@ -68,7 +68,7 @@ export default function ProfilePage() {
             </div>
           </>
         )}
-      </Container>
+      </div>
     </Box>
   );
 }

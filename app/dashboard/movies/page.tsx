@@ -31,8 +31,9 @@ const Movies = () => {
       <div className="bg-black text-white min-h-screen p-[40px]">
         {/* <Navbar /> */}
         <HeroSection data={featuredMovie} />
-        <div className="trending-head mt-[24px]">Trending Now</div>
-        <CardSlider allVideos={movies} />
+        <div style={{ marginTop: "32px" }}>
+          <CardSlider allVideos={movies} title={"Trending Now"} />
+        </div>
       </div>
     </>
   );

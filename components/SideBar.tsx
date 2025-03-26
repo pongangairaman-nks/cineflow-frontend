@@ -11,10 +11,15 @@ import {
   User
 } from "lucide-react";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
+import { logout } from "../redux/slices/authSlice";
 
 function SideBar() {
   const [activeItem, setActiveItem] = useState("Home");
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
   const menuItems = [
     { icon: Home, label: "Home", path: "/dashboard/home" },
     { icon: Film, label: "Movies", path: "/dashboard/movies" },
@@ -24,6 +29,11 @@ function SideBar() {
     { icon: User, label: "Profile", path: "/dashboard/profile" },
     { icon: Wallet, label: "Subscription", path: "/dashboard/subscription" }
   ];
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push("/auth/login");
+  };
 
   return (
     <div className="h-full min-h-screen w-[240px] left-0 top-0 bg-[#1E1E2E] py-6 flex flex-col z-10">
@@ -63,6 +73,7 @@ function SideBar() {
               flex items-center w-full px-[16px] py-[8px] rounded-lg mb-2 transition-colors duration-200 cursor-pointer
               text-gray-400 hover:bg-[#2C2C3E] hover:text-white
             `}
+        onClick={handleLogout}
       >
         <LogOut size={20} className="mr-3" />
         <span className="text-sm font-light ml-[16px]">Logout</span>

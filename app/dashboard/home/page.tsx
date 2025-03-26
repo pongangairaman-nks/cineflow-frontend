@@ -76,32 +76,38 @@ export default function Dashboard() {
       <div className="bg-black text-white min-h-screen p-[40px]">
         {/* <Navbar /> */}
         <HeroSection data={featuredMovie} />
-        <div className="trending-head mt-[24px]">Trending Now</div>
-        <CardSlider allVideos={allVideos} />
+        <div style={{ marginTop: "32px" }}>
+          <CardSlider allVideos={allVideos} title={"Trending Now"} />
+        </div>
         {userWatchHistory?.length > 3 && (
-          <>
-            <div className="trending-head">Continue watching...</div>
-            <CardSlider allVideos={userWatchHistory} />
-          </>
+          <div style={{ marginTop: "24px" }}>
+            <CardSlider
+              allVideos={userWatchHistory}
+              title={"Continue watching..."}
+            />
+          </div>
         )}
         {aiRecommendationList && aiRecommendationList?.length > 0 && (
-          <>
-            <div className="trending-head">Ai Recommendation List </div>
-            <CardSlider allVideos={aiRecommendationList} />
-          </>
+          <div style={{ marginTop: "24px" }}>
+            <CardSlider
+              allVideos={aiRecommendationList}
+              title={"Ai Recommendation List"}
+            />
+          </div>
         )}
         {allMovies && (
-          <>
-            <div className="trending-head">Binge Worty movies</div>
-            <CardSlider allVideos={allMovies} />
-          </>
+          <div style={{ marginTop: "24px" }}>
+            <CardSlider allVideos={allMovies} title={"Binge Worty movies"} />
+          </div>
         )}
 
         {allTvShows && (
-          <>
-            <div className="trending-head">Critically Acclaimed Tv Shows </div>
-            <CardSlider allVideos={allTvShows} />
-          </>
+          <div style={{ marginTop: "24px" }}>
+            <CardSlider
+              allVideos={allTvShows}
+              title={"Critically Acclaimed Tv Shows"}
+            />
+          </div>
         )}
       </div>
     </>

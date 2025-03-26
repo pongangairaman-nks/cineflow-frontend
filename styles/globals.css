@@ -262,7 +262,9 @@ a {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   /* background-color: white; */
-  margin: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 40px;
   transition: transform 0.3s ease-in-out;
   height: 300px;
 }
@@ -345,7 +347,8 @@ a {
   font-size: 24px;
   font-weight: 500;
   font-family: "Netflix Sans";
-  padding: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   display: flex;
   flex-direction: row;
   justify-content: "flex-start";

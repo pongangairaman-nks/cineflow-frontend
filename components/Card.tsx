@@ -21,10 +21,10 @@ const Card: React.FC<CardProps> = ({ imageUrl, title, videoUrl,ele }) => {
     if(!ele?.aiDescription){
      res = await dispatch(fetchVideoDescription(ele?._id))
     }
-    if(res){
+    // if(res){
       dispatch(setShowDialog(true))
       dispatch(setClickedcard(ele))
-    }
+    // }
  
   };
 

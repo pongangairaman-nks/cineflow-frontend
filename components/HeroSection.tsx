@@ -7,7 +7,7 @@ import {
   setClickedcard,
   setLoading,
   setShowDialog,
-  setStoreMovie,
+  setStoreMovie
 } from "../redux/slices/movieSlice";
 import { useRouter } from "next/navigation";
 import { HeroData } from "../app/dashboard/home/page";
@@ -15,7 +15,7 @@ interface HeroSectionProps {
   data: HeroData;
 }
 
-const HeroSection = ({ data }:HeroSectionProps) => {
+const HeroSection = ({ data }: HeroSectionProps) => {
   // console.log(data, "data");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const HeroSection = ({ data }:HeroSectionProps) => {
         type: data?.type,
         genre: data?.genre,
         poster: data?.image,
-        aiDescription: data?.description,
+        aiDescription: data?.description
       })
     );
   };
@@ -48,10 +48,14 @@ const HeroSection = ({ data }:HeroSectionProps) => {
         transition={{
           type: "spring", // You can adjust the type of transition
           stiffness: 100, // Adjust the spring stiffness for bounce effect
-          damping: 25, // Control the bounce effect
+          damping: 25 // Control the bounce effect
+        }}
+        style={{
+          display: "flex",
+          justifyContent: "end"
         }}
       >
-        <div className="content">
+        <div className="content mt-[240px]">
           <h1 className="title">{data?.title}</h1>
           <p className="description">{data?.description}</p>
           <div className="buttons">

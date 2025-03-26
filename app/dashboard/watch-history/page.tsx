@@ -46,7 +46,7 @@ export default function Dashboard() {
       <div className="bg-black text-white min-h-screen">
         {userWatchHistory?.length > 3 && (
           <>
-            <div className="trending-head">continue watching...</div>
+            <div className="trending-head">Continue watching...</div>
             <CardSlider allVideos={userWatchHistory} />
           </>
         )}

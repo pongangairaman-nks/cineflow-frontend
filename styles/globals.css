@@ -11,12 +11,12 @@
 
 :root {
   --background: #141414; /* Dark Netflix-like background */
-  --foreground: #e50914; /* Netflix red for buttons */
+  --foreground: #6e44ff; /* Netflix red for buttons */
   --textColor: #ffffff; /* White text */
   --gray-light: #b3b3b3; /* Gray text */
   --input-bg: #333333; /* Input fields background */
   --input-border: #666666; /* Input border */
-  --input-focus: #e50914; /* Focus color */
+  --input-focus: #7f5dfc; /* Focus color */
   --font: "Inter", sans-serif;
 }
 
@@ -75,7 +75,7 @@ button {
 }
 
 button:hover {
-  background: #b20710;
+  background: #8563fd;
 }
 
 /* ✅ Links */
@@ -243,7 +243,7 @@ a {
   padding: 12px 30px;
   font-size: 1rem;
   font-weight: bold;
-  background-color: #e50914; /* Netflix Red */
+  background-color: #6e44ff; /* Netflix Red */
   color: white;
   border: none;
   border-radius: 3px;
@@ -253,7 +253,7 @@ a {
 
 .playBtn:hover,
 .moreInfoBtn:hover {
-  background-color: #f40612; /* Darker Red */
+  background-color: #886af7; /* Darker Red */
 }
 
 .card {
@@ -317,7 +317,7 @@ a {
 }
 
 .slick-next :hover {
-  background-color: #b20710 !important;
+  background-color: #6e44ff !important;
 }
 
 .slick-prev {

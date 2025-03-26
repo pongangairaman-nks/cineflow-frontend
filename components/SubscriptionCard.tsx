@@ -46,7 +46,7 @@ const cardStyle: CSSProperties = {
   width: "300px",
   height: "300px",
   background:
-    "linear-gradient(149deg, #6C1E41 6.96%, #251743 40.17%, #120c1f 73.39%)",
+    "linear-gradient(149deg, #7754f4 6.96%, #251743 40.17%, #120c1f 73.39%)",
   borderRadius: "10px",
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   overflow: "hidden",
@@ -58,10 +58,10 @@ const cardStyle: CSSProperties = {
 };
 
 const buttonStyle = {
-  marginTop: "15px",
+  marginTop: "40px",
   padding: "10px 15px",
   border: "none",
-  background: "#e50914",
+  background: "#582feb",
   color: "white",
   borderRadius: "5px",
   cursor: "pointer",
@@ -111,10 +111,10 @@ const SubscriptionCard = ({ plan }: { plan: Plan }) => {
           handleCheckout(plan.planName, plan.price);
         }}
         style={buttonStyle}
-        onMouseEnter={(e) => (e.currentTarget.style.background = "#b20710")}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "#e50914")}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "#6e59bc")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "#582feb")}
       >
-        Subscribe
+        Buy Now
       </button>
     </div>
   );

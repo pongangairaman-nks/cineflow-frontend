@@ -10,7 +10,7 @@ import {
   setStoreMovie,
 } from "../redux/slices/movieSlice";
 import { useRouter } from "next/navigation";
-import { HeroData } from "../app/dashboard/page";
+import { HeroData } from "../app/dashboard/home/page";
 interface HeroSectionProps {
   data: HeroData;
 }

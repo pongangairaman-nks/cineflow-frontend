@@ -14,7 +14,7 @@ function SuccessContent() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/dashboard");
+      router.push("/dashboard/home");
     }, 3000);
     return () => clearTimeout(timer);
   }, [router]);
@@ -51,7 +51,13 @@ function SuccessContent() {
 // Page component with Suspense boundary
 export default function SuccessPage() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-black text-white">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen bg-black text-white">
+          Loading...
+        </div>
+      }
+    >
       <SuccessContent />
     </Suspense>
   );

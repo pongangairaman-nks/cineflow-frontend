@@ -1,14 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import {userRegister } from "../../../redux/slices/authSlice";
+import { userRegister } from "../../../redux/slices/authSlice";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { AppDispatch } from "../../../redux/store";
-
 
 interface SignUpForm {
   name: string;
@@ -24,9 +23,9 @@ export default function Home() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid }
   } = useForm<SignUpForm>({
-    mode: "onBlur",
+    mode: "onBlur"
   });
 
   // const handleSignUp = async (data: SignUpForm) => {
@@ -57,13 +56,13 @@ export default function Home() {
   // };
 
   const handleSignup = async (data: SignUpForm) => {
-    setError(null)
+    setError(null);
     console.log(data, "register");
     const res = await dispatch(
       userRegister({
         name: data.name,
         email: data.email,
-        password: data.password,
+        password: data.password
       })
     );
     if (res.payload.status == 201) {
@@ -96,7 +95,7 @@ export default function Home() {
             placeholder="Name"
             required={true}
             {...register("name", {
-              required: "Name is required",
+              required: "Name is required"
             })}
           />
           {errors.name && (
@@ -110,8 +109,8 @@ export default function Home() {
               required: "Email is required",
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                message: "Enter a valid email",
-              },
+                message: "Enter a valid email"
+              }
             })}
           />
           {errors.email && (
@@ -125,8 +124,8 @@ export default function Home() {
               required: "Password is required",
               minLength: {
                 value: 6,
-                message: "Password must be at least 6 characters",
-              },
+                message: "Password must be at least 6 characters"
+              }
             })}
           />
           {errors.password && (
@@ -147,11 +146,14 @@ export default function Home() {
             Sign In
           </Link>
         </div>
-         <div className="plans">
-         <Link  href={"/subscription"} style={{textDecoration:"none"}}>
-          Click here to check the Plans...
-        </Link>
-         </div>
+        <div className="plans">
+          <Link
+            href={"/dashboard/subscription"}
+            style={{ textDecoration: "none" }}
+          >
+            Click here to check the Plans...
+          </Link>
+        </div>
       </div>
     </div>
   );

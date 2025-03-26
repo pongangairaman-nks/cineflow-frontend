@@ -47,7 +47,10 @@ body::-webkit-scrollbar {
 
 /* ✅ Input Field Styling */
 input {
-  padding: 12px;
+  padding-right: 12px;
+  padding-left: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   background: var(--input-bg);
   border: 1px solid var(--input-border);
   color: var(--textColor);
@@ -72,7 +75,7 @@ button {
 }
 
 button:hover {
-  background: #b20710; /* Slightly darker red on hover */
+  background: #b20710;
 }
 
 /* ✅ Links */
@@ -423,7 +426,8 @@ a {
 /* Gradient Text */
 .logo-text {
   position: relative;
-  background: linear-gradient(45deg, #b20710, #800080); /* Gradient for text */
+  font-size: xx-large;
+  background: linear-gradient(45deg, #8a15a4, #00638c); /* Gradient for text */
   -webkit-background-clip: text; /* Use text as a mask to show gradient */
   color: transparent; /* Make the text color transparent to show gradient */
   z-index: 1; /* Ensure text is on top */

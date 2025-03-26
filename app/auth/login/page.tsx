@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { userLogin} from "../../../redux/slices/authSlice";
+import { userLogin } from "../../../redux/slices/authSlice";
 import { Input } from "@/components/ui/input";
 // import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -48,16 +48,18 @@ export default function Home() {
   //     setError(err.message);
   //   }
   // };
- console.log(process.env.NEXT_PUBLIC_BASE_URL,"baseurl")
-  const handleLogin = async (data:LoginForm)=>{
-    setError(null)
-    console.log(data,"data")
-   const res = await  dispatch(userLogin({ email: data.email, password: data.password }))
-  //  console.log(res)
-   if(res?.payload?.status == 200){
-    router.push("/dashboard")
-   }
-  }
+  console.log(process.env.NEXT_PUBLIC_BASE_URL, "baseurl");
+  const handleLogin = async (data: LoginForm) => {
+    setError(null);
+    console.log(data, "data");
+    const res = await dispatch(
+      userLogin({ email: data.email, password: data.password })
+    );
+    //  console.log(res)
+    if (res?.payload?.status == 200) {
+      router.push("/dashboard/home");
+    }
+  };
   return (
     <div className="auth-container">
       <div className="absolute inset-0 bg-[url('/netflix-bg.jpg')] bg-cover bg-center opacity-50 w-[100vw] h-[100vh]"></div>
@@ -88,7 +90,9 @@ export default function Home() {
             className="mt-3"
           />
           {errors.email && (
-            <p className="text-red-500 text-sm flex flex-row justify-start items-center">{errors.email.message}</p>
+            <p className="text-red-500 text-sm flex flex-row justify-start items-center">
+              {errors.email.message}
+            </p>
           )}
           <Input
             type="password"
@@ -103,18 +107,19 @@ export default function Home() {
             })}
           />
           {errors.password && (
-            <p className="text-red-500 text-sm text-start">{errors.password.message}</p>
+            <p className="text-red-500 text-sm text-start">
+              {errors.password.message}
+            </p>
           )}
           <div className="w-full">
-          <button
-            type="submit"
-            className="bg-[var(--foreground)] text-white-800 font-semibold py-3 mt-3 w-full"
-            disabled={!isValid}
-          >
-            Sign In
-          </button>
+            <button
+              type="submit"
+              className="bg-[var(--foreground)] text-white-800 font-semibold py-3 mt-3 w-full"
+              disabled={!isValid}
+            >
+              Sign In
+            </button>
           </div>
-      
         </form>
 
         <div className="mt-5 flex justify-between text-sm text-gray-400 p-3 forgotSection">

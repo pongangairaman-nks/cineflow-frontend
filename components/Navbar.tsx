@@ -25,7 +25,7 @@ export default function Navbar() {
   //     setIsScrolled(window.scrollY > 50);
   //   });
   // }
-// console.log(scrollY,"Y")
+  // console.log(scrollY,"Y")
   return (
     // <motion.nav
     //   initial={{ opacity: 0 }}
@@ -64,7 +64,7 @@ export default function Navbar() {
       transition={{ duration: 0.8 }}
     >
       <div className="logo">
-        <Link href="/dashboard" className="logo-text">
+        <Link href="/dashboard/home" className="logo-text">
           Cineflow
         </Link>
       </div>
@@ -76,17 +76,17 @@ export default function Navbar() {
             </Link>
           </li> */}
           <li>
-            <Link href="/movies" className="links">
+            <Link href="/dashboard/movies" className="links">
               Movies
             </Link>
           </li>
           <li>
-            <Link href="/tv-shows" className="links">
+            <Link href="/dashboard/tv-shows" className="links">
               Tv Shows
             </Link>
           </li>
           <li>
-            <Link href="/profile" className="links">
+            <Link href="/dashboard/profile" className="links">
               Profile
             </Link>
           </li>

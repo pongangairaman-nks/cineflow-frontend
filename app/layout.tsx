@@ -5,17 +5,16 @@ import { store } from "../redux/store";
 // import { CSSProperties } from "react";
 // import { useRouter } from "next/navigation";
 // import useAuth from "@/hooks/useAuth";
-import Navbar from "../components/Navbar";
-import { usePathname } from "next/navigation";
+// import Navbar from "../components/Navbar";
+// import { usePathname } from "next/navigation";
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
-  const isAuthRoute = pathname.startsWith("/auth");
-
+  // const pathname = usePathname();
+  // const isAuthRoute = pathname.startsWith("/auth");
 
   // const router = useRouter();
   // const { authenticated, loading } = useAuth();
@@ -47,7 +46,7 @@ export default function RootLayout({
     <>
       <html lang="en">
         <body>
-          {!isAuthRoute && <Navbar />}
+          {/* {!isAuthRoute && <Navbar />} */}
           <Provider store={store}>{children}</Provider>
         </body>
       </html>

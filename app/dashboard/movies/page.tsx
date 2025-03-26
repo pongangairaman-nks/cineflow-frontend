@@ -32,7 +32,11 @@ const Movies = () => {
         {/* <Navbar /> */}
         <HeroSection data={featuredMovie} />
         <div style={{ marginTop: "32px" }}>
-          <CardSlider allVideos={movies} title={"Trending Now"} />
+          <CardSlider
+            allVideos={movies}
+            title={"Trending Now"}
+            listingPage={true}
+          />
         </div>
       </div>
     </>

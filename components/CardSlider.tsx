@@ -17,9 +17,10 @@ export interface Video {
 interface CardSliderProps {
   allVideos: Video[];
   title: string;
+  listingPage?: boolean;
 }
 
-function CardSlider({ allVideos, title }: CardSliderProps) {
+function CardSlider({ allVideos, title, listingPage }: CardSliderProps) {
   // const dispatch = useDispatch<AppDispatch>();
   //   const {movies} = useSelector((state:any)=>state?.movie)
   console.log(allVideos, "movies");
@@ -54,61 +55,72 @@ function CardSlider({ allVideos, title }: CardSliderProps) {
       <VideoModal />
       <div className="w-full py-8 ">
         <div className="flex justify-between mb-[16px]">
-          <div className="trending-head">{title}</div>
-          <div className="flex gap-[8px]">
-            <button
-              onClick={handlePrev}
-              className="z-10 bg-[#1E1E2E] rounded-[4px] hover:bg-black/70 transition-colors"
-              style={{ height: "48px" }}
-            >
-              <ChevronLeft className="text-white" size={16} />
-            </button>
-            <button
-              onClick={handleNext}
-              className="z-10 bg-[#1E1E2E] rounded-[4px] hover:bg-black/70 transition-colors"
-              style={{ height: "48px" }}
-            >
-              <ChevronRight className="text-white" size={16} />
-            </button>
+          <div
+            className={
+              !listingPage
+                ? "trending-head"
+                : "trending-head w-full flex justify-center"
+            }
+          >
+            {title}
           </div>
+          {!listingPage && (
+            <div className="flex gap-[8px]">
+              <button
+                onClick={handlePrev}
+                className="z-10 bg-[#1E1E2E] rounded-[4px] hover:bg-black/70 transition-colors"
+                style={{ height: "48px" }}
+              >
+                <ChevronLeft className="text-white" size={16} />
+              </button>
+              <button
+                onClick={handleNext}
+                className="z-10 bg-[#1E1E2E] rounded-[4px] hover:bg-black/70 transition-colors"
+                style={{ height: "48px" }}
+              >
+                <ChevronRight className="text-white" size={16} />
+              </button>
+            </div>
+          )}
         </div>
-        <div className="flex items-center">
-          <div className="flex overflow-hidden w-full">
-            <div
-              className="flex transition-transform duration-500 ease-in-out space-x-6"
-              style={{
-                transform: `translateX(-${
-                  currentIndex * (100 / allVideos.length)
-                }%)`,
-                width: `${allVideos.length * 100}%`
-              }}
-            >
-              {allVideos?.map((ele: Video, index: number) => (
-                <Card
-                  imageUrl={ele?.poster}
-                  title={ele?.title}
-                  videoUrl={ele?.url}
-                  key={index}
-                  ele={ele}
-                />
-              ))}
+        {!listingPage ? (
+          <div className="flex items-center">
+            <div className="flex overflow-hidden w-full">
+              <div
+                className="flex transition-transform duration-500 ease-in-out space-x-6"
+                style={{
+                  transform: `translateX(-${
+                    currentIndex * (100 / allVideos.length)
+                  }%)`,
+                  width: `${allVideos.length * 100}%`
+                }}
+              >
+                {allVideos?.map((ele: Video, index: number) => (
+                  <Card
+                    imageUrl={ele?.poster}
+                    title={ele?.title}
+                    videoUrl={ele?.url}
+                    key={index}
+                    ele={ele}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="mt-[20px] flex flex-wrap gap-[40px] justify-center">
+            {allVideos?.map((ele: Video, index: number) => (
+              <Card
+                imageUrl={ele?.poster}
+                title={ele?.title}
+                videoUrl={ele?.url}
+                key={index}
+                ele={ele}
+              />
+            ))}
+          </div>
+        )}
       </div>
-      {/* <div className="slider-container">
-        <Slider {...settings}>
-          {allVideos?.map((ele: Video, index: number) => (
-            <Card
-              imageUrl={ele?.poster}
-              title={ele?.title}
-              videoUrl={ele?.url}
-              key={index}
-              ele={ele}
-            />
-          ))}
-        </Slider>
-      </div> */}
     </>
   );
 }

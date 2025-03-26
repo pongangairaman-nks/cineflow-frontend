@@ -31,7 +31,11 @@ const TvShows = () => {
       <div className="bg-black text-white min-h-screen p-[40px]">
         <HeroSection data={featuredMovie} />
         <div style={{ marginTop: "32px" }}>
-          <CardSlider allVideos={tvShows} title={"Trending Now"} />
+          <CardSlider
+            allVideos={tvShows}
+            title={"Trending Now"}
+            listingPage={true}
+          />
         </div>
       </div>
     </>

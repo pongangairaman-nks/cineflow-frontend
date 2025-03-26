@@ -52,6 +52,7 @@ export default function Dashboard() {
             <CardSlider
               allVideos={userWatchHistory}
               title={"Continue watching..."}
+              listingPage={true}
             />
           </>
         )}

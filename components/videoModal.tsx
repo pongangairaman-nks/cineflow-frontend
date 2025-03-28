@@ -15,16 +15,16 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useRouter } from "next/navigation";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import CommentIcon from "@mui/icons-material/Comment";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Avatar, TextField, Tooltip } from "@mui/material";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { RootState } from "../redux/store";
+import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
+import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 // ReactModal.setAppElement('#__next');
 
 interface ClickCard {
@@ -115,17 +115,7 @@ const VideoModal = () => {
         className="modal"
         overlayClassName="modal-overlay"
       >
-        {/* <button onClick={handleModal} className="close-button">close</button> */}
         {showDialog ? (
-          // <div className="video-container">
-          //   <ReactPlayer
-          //     ref={playerRef}
-          //     url={selectedMovie}
-          //     playing={true}
-          //     controls={true}
-          //     className="player"
-          //   />
-          // </div>
           <div>
             <Card>
               <CardMedia
@@ -135,8 +125,71 @@ const VideoModal = () => {
                 className="show-image"
               />
               <CardContent className="show-content">
-                <div className="show-title">{clickedCard?.title}</div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div
+                    className="show-title"
+                    style={{ fontSize: "24px", fontStyle: "italic" }}
+                  >
+                    {clickedCard?.title}
+                  </div>
+                  <div className="show-info">
+                    <FiberManualRecordIcon
+                      sx={{
+                        fontSize: "small",
+                        color: "grey",
+                        width: "0.7rem",
+                        height: "0.7rem"
+                      }}
+                    />
+                    <div style={{ color: "white", marginLeft: "-3px" }}>
+                      2025
+                    </div>
+                    <FiberManualRecordIcon
+                      sx={{
+                        fontSize: "small",
+                        color: "grey",
+                        width: "0.7rem",
+                        height: "0.7rem"
+                      }}
+                    />
+                    <div style={{ color: "white", marginLeft: "-3px" }}>A</div>{" "}
+                    <FiberManualRecordIcon
+                      sx={{
+                        fontSize: "small",
+                        color: "grey",
+                        width: "0.7rem",
+                        height: "0.7rem"
+                      }}
+                    />
+                    <div style={{ color: "white", marginLeft: "-3px" }}>
+                      {clickedCard?.genre || "Thiller"}
+                    </div>{" "}
+                    <FiberManualRecordIcon
+                      sx={{
+                        fontSize: "small",
+                        color: "grey",
+                        width: "0.7rem",
+                        height: "0.7rem"
+                      }}
+                    />
+                    <div style={{ color: "white", marginLeft: "-3px" }}>
+                      {clickedCard?.type || "Movie"}
+                    </div>
+                  </div>
+                </div>
                 <div className="show-des">
+                  <div
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                      marginBottom: "8px",
+                      marginTop: "8px"
+                    }}
+                  >
+                    AI Description
+                  </div>
                   {showDes ||
                     clickedCard?.aiDescription ||
                     "Generating Descripation using AI...."}
@@ -144,19 +197,19 @@ const VideoModal = () => {
               </CardContent>
               <div className="show-data">
                 <div className="show-actions">
-                  <Tooltip title="Play Video">
-                    <PlayCircleOutlineIcon
+                  <Tooltip title="Play Video" style={{ margin: "4px" }}>
+                    <PlayArrowRoundedIcon
                       sx={{
                         color: "white",
-                        height: "35px",
-                        width: "35px",
+                        height: "40px",
+                        width: "40px",
                         zIndex: 999
                       }}
                       onClick={handleModal}
                     />
                   </Tooltip>
-                  <Tooltip title="Add to Watchlist">
-                    <AddCircleOutlineIcon
+                  <Tooltip title="Add to Watchlist" style={{ margin: "4px" }}>
+                    <BookmarkAddOutlinedIcon
                       sx={{ color: "white", height: "35px", width: "35px" }}
                       onClick={() => {
                         handleWatchList(clickedCard);
@@ -164,23 +217,26 @@ const VideoModal = () => {
                     />
                   </Tooltip>
                   {likeResponse?.likes == 0 ? (
-                    <Tooltip title="Like">
-                      <ThumbUpOffAltIcon
+                    <Tooltip title="Like" style={{ margin: "4px" }}>
+                      <FavoriteBorderIcon
                         sx={{ color: "white", height: "35px", width: "35px" }}
                         onClick={handleLike}
                       />
                     </Tooltip>
                   ) : (
-                    <Tooltip title="Dislike">
-                      <ThumbUpIcon
+                    <Tooltip title="Dislike" style={{ margin: "4px" }}>
+                      <FavoriteIcon
                         sx={{ color: "red", height: "35px", width: "35px" }}
                         onClick={handleLike}
                       />
                     </Tooltip>
                   )}
-                  <Tooltip title="Add Comment" sx={{ color: "white" }}>
-                    <CommentIcon
-                      sx={{ color: "white", height: "35px", width: "35px" }}
+                  <Tooltip
+                    title="Add Comment"
+                    sx={{ color: "white", margin: "4px" }}
+                  >
+                    <MessageOutlinedIcon
+                      sx={{ color: "white", height: "32px", width: "35px" }}
                       onClick={() => {
                         dispatch(getCommentVideo(clickedCard?._id));
                         setShowCommentBox(true);
@@ -188,7 +244,7 @@ const VideoModal = () => {
                     />
                   </Tooltip>
                 </div>
-                <div className="show-info">
+                {/* <div className="show-info">
                   <FiberManualRecordIcon
                     sx={{
                       fontSize: "small",
@@ -229,11 +285,14 @@ const VideoModal = () => {
                   <div style={{ color: "white", marginLeft: "-3px" }}>
                     {clickedCard?.type || "Movie"}
                   </div>
-                </div>
+                </div> */}
               </div>
               {showCommentBox ? (
                 <div className="comment-section">
-                  <div className="comment-title">{`Total Comments: ${videoComments?.result?.length}`}</div>
+                  <div
+                    className="comment-title"
+                    style={{ paddingLeft: "24px", paddingTop: "16px" }}
+                  >{`Total Comments: ${videoComments?.result?.length}`}</div>
                   <div className="comment-merge">
                     <TextField
                       fullWidth
@@ -241,17 +300,21 @@ const VideoModal = () => {
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           "&.Mui-focused fieldset": {
-                            borderColor: "red"
+                            borderColor: "#6e44ff"
                             // color:"white"
                           }
                         }
                       }}
                       className="textfield"
+                      value={inputComment}
                       onChange={(event) => {
                         setInputComment(event?.target.value);
                       }}
                     />
-                    <div className="submit-parent">
+                    <div
+                      className="submit-parent"
+                      style={{ paddingRight: "24px" }}
+                    >
                       <button className="moreInfoBtn" onClick={handleComment}>
                         {" "}
                         Submit
@@ -268,13 +331,15 @@ const VideoModal = () => {
                               <Avatar
                                 alt={ele?.user.name}
                                 src={ele?.user?.avatar}
-                                sx={{ width: 56, height: 56 }}
+                                sx={{ width: 40, height: 40 }}
                               />
-                              <div className="profile-details">
-                                {" "}
+                              <div>
                                 <Typography
-                                  variant="h5"
-                                  sx={{ color: "white" }}
+                                  sx={{
+                                    color: "white",
+                                    fontSize: "16px",
+                                    fontWeight: "bold"
+                                  }}
                                 >
                                   {ele?.user.name}
                                 </Typography>

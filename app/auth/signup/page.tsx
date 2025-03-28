@@ -23,7 +23,7 @@ export default function Home() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<SignUpForm>({
     mode: "onBlur"
   });
@@ -66,7 +66,7 @@ export default function Home() {
       })
     );
     if (res.payload.status == 201) {
-      router.push("/dashboard");
+      router.push("/dashboard/home");
     }
   };
 
@@ -87,7 +87,7 @@ export default function Home() {
         )}
 
         <form
-          className="mt-6 flex flex-col space-y-4"
+          className="mt-6 flex flex-col"
           onSubmit={handleSubmit(handleSignup)}
         >
           <Input
@@ -97,6 +97,8 @@ export default function Home() {
             {...register("name", {
               required: "Name is required"
             })}
+            className="mt-3 w-full h-[48px] rounded-[4px] border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+            style={{ marginLeft: 0, marginTop: "16px" }}
           />
           {errors.name && (
             <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -112,6 +114,8 @@ export default function Home() {
                 message: "Enter a valid email"
               }
             })}
+            className="mt-3 w-full h-[48px] rounded-[4px] border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+            style={{ marginLeft: 0, marginTop: "16px" }}
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -127,6 +131,8 @@ export default function Home() {
                 message: "Password must be at least 6 characters"
               }
             })}
+            className="mt-3 w-full h-[48px] rounded-[4px] border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+            style={{ marginLeft: 0, marginTop: "16px" }}
           />
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -134,14 +140,16 @@ export default function Home() {
           <Button
             type="submit"
             className="bg-[var(--foreground)] text-white font-semibold py-3"
-            disabled={!isValid}
-            style={{ backgroundColor: "#6E44FF" }}
+            style={{ backgroundColor: "#6E44FF", marginTop: "16px" }}
           >
             Sign Up
           </Button>
         </form>
 
-        <div className="mt-4 flex justify-between text-sm text-gray-400">
+        <div
+          className="mt-4 flex justify-between text-sm text-gray-400"
+          style={{ marginTop: "16px" }}
+        >
           <Link href="#">Forgot password?</Link>
           <Link
             href="/auth/login"
@@ -151,14 +159,11 @@ export default function Home() {
             Sign In
           </Link>
         </div>
-        <div className="plans">
-          <Link
-            href={"/dashboard/subscription"}
-            style={{ textDecoration: "none" }}
-          >
+        {/* <div className="plans">
+          <Link href={"/dashboard/subscription"}>
             Click here to check the Plans...
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

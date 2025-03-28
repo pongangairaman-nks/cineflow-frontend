@@ -32,7 +32,7 @@ export default function Dashboard() {
   //dispatches an action the redux store
   const dispatch: AppDispatch = useDispatch();
   const { userWatchHistory } = useSelector((state: RootState) => state.movie);
-  // console.log(allVideos, "videos");
+  console.log("userWatchHistory", userWatchHistory);
   //fetch movies when the component mounts
   useEffect(() => {
     dispatch(getWatchHistory());
@@ -47,7 +47,7 @@ export default function Dashboard() {
         className="bg-black text-white min-h-screen"
         style={{ margin: "24px" }}
       >
-        {userWatchHistory?.length > 3 && (
+        {userWatchHistory?.length > 0 && (
           <>
             <CardSlider
               allVideos={userWatchHistory}

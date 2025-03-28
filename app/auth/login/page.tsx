@@ -65,7 +65,10 @@ export default function Home() {
       <div className="absolute inset-0 bg-[url('/netflix-bg.jpg')] bg-cover bg-center opacity-50 w-[100vw] h-[100vh]"></div>
       <div className="absolute inset-0 bg-overlay"></div>
       <div className="auth-box z-2">
-        <h1 className="text-4xl font-bold text-center text-[var(--foreground)] heading logo-text">
+        <h1
+          className="text-4xl font-bold text-center text-[var(--foreground)] heading logo-text"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           CineFlow
         </h1>
         {error && (
@@ -73,12 +76,12 @@ export default function Home() {
         )}
 
         <form
-          className="mt-6 flex flex-col items-center space-y-4"
+          className="mt-[16px] mb-[16px] flex flex-col items-center space-y-4"
           onSubmit={handleSubmit(handleLogin)}
         >
           <Input
             type="email"
-            placeholder="Email"
+            placeholder="Enter your email"
             required={true}
             {...register("email", {
               required: "Email is required",
@@ -87,7 +90,7 @@ export default function Home() {
                 message: "Enter a valid email"
               }
             })}
-            className="mt-3"
+            className="mt-3 w-full h-[48px] rounded-[4px] border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
           />
           {errors.email && (
             <p className="text-red-500 text-sm flex flex-row justify-start items-center">
@@ -105,13 +108,14 @@ export default function Home() {
                 message: "Password must be at least 6 characters"
               }
             })}
+            className="mt-3 w-full h-[48px] rounded-[4px] border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
           />
           {errors.password && (
             <p className="text-red-500 text-sm text-start">
               {errors.password.message}
             </p>
           )}
-          <div className="w-full">
+          <div className="w-full mt-[16px]">
             <button
               type="submit"
               className="bg-[var(--foreground)] text-white-800 font-semibold py-3 mt-3 w-full"
@@ -123,7 +127,7 @@ export default function Home() {
           </div>
         </form>
 
-        <div className="mt-5 flex justify-between text-sm text-gray-400 p-3 forgotSection">
+        <div className="mt-[32x] flex justify-between text-sm text-gray-400 p-3 forgotSection">
           <Link href="#">Forgot password?</Link>
           <Link
             href="/auth/signup"
